@@ -11,9 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('table_user', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+        Schema::create('users', function (Blueprint $table) {
+            $table->id(); 
+            $table->string('nama'); // Nama pengguna
+            $table->string('email')->unique(); // Email pengguna, harus unik
+            $table->string('password'); // Password pengguna
+            $table->enum('role', ['admin', 'manager', 'user']); // Role pengguna
+            $table->rememberToken(); // Token untuk 'remember me'
+            $table->timestamps(); // Kolom untuk timestamp created_at dan updated_at
         });
     }
 
@@ -22,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('table_user');
+        Schema::dropIfExists('users');
     }
 };

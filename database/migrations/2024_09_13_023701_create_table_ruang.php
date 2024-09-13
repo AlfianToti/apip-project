@@ -12,7 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('table_ruang', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('kode_ruang');
+            $table->string('nama_ruang');
+            $table->boolean('status')->default(true);
             $table->timestamps();
         });
     }
@@ -22,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('table_ruang');
+        Schema::dropIfExists('ruang');
     }
 };

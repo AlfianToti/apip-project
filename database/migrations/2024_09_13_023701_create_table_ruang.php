@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('table_ruang', function (Blueprint $table) {
+        Schema::create('ruang', function (Blueprint $table) {
             $table->bigIncrements('kode_ruang');
             $table->string('nama_ruang');
             $table->boolean('status')->default(true);

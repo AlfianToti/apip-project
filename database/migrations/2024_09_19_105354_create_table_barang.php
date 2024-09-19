@@ -9,23 +9,25 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
+    public function up()
     {
         Schema::create('barang', function (Blueprint $table) {
             $table->bigIncrements('kode_barang');
             $table->string('nama');
-            $table->boolean('status')->default(true); // true untuk 'tersedia', false untuk 'tidak'
+            $table->boolean('status')->default(true);
             $table->unsignedBigInteger('kode_ruang')->nullable();
 
-            $table->foreign('kode_ruang')->references('kode_ruang')->on('ruang')->onDelete('set null');
+            $table->foreign('kode_ruang')->references('kode_ruang')->on('ruang')->onDelete('set null'); 
             $table->timestamps();
         });
     }
 
     /**
      * Reverse the migrations.
+     *
+     * @return void
      */
-    public function down(): void
+    public function down()
     {
         Schema::dropIfExists('barang');
     }

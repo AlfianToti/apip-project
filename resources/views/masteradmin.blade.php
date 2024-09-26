@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>SyscoFire</title>
+  <title>APIP</title>
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
   <!-- Font Awesome -->
@@ -300,9 +300,9 @@
           </li>
           
           <li class="nav-item">
-            <a href="" class="nav-link">
+            <a href="ruang" class="nav-link">
               <i class="fas fa-chalkboard-teacher"></i>
-              <p>Data Kelas</p>
+              <p>Data Ruang</p>
             </a>
           </li>
           <li class="nav-item">

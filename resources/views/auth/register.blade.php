@@ -1,97 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Register Page</title>
-        <style>
-            body {
-                font-family: Arial, sans-serif;
-                background-color: #f4f4f4;
-                margin: 0;
-                padding: 0;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                height: 100vh;
-            }
-            .register-container {
-                background-color: white;
-                padding: 20px;
-                border-radius: 8px;
-                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-                width: 300px;
-            }
-            h1 {
-                text-align: center;
-                margin-bottom: 20px;
-            }
-            .form-group {
-                margin-bottom: 15px;
-            }
-            .form-group label {
-                display: block;
-                margin-bottom: 5px;
-                font-weight: bold;
-            }
-            .form-group input {
-                width: 100%;
-                padding: 8px;
-                box-sizing: border-box;
-                border: 1px solid #ccc;
-                border-radius: 4px;
-            }
-            .btn {
-                width: 100%;
-                padding: 10px;
-                background-color: #28a745;
-                border: none;
-                border-radius: 4px;
-                color: white;
-                font-weight: bold;
-                cursor: pointer;
-            }
-            .btn:hover {
-                background-color: #218838;
-            }
-            .form-footer {
-                text-align: center;
-                margin-top: 10px;
-            }
-            .form-footer a {
-                text-decoration: none;
-                color: #007bff;
-            }
-            .form-footer a:hover {
-                text-decoration: underline;
-            }
-        </style>
-    </head>
-    <body>
-        <div class="register-container">
-            <h1>Register</h1>
-            <form action="/register" method="POST">
-                <div class="form-group">
-                    <label for="name">Full Name:</label>
-                    <input type="text" id="name" name="name" required>
-                </div>
-                <div class="form-group">
-                    <label for="email">Email:</label>
-                    <input type="email" id="email" name="email" required>
-                </div>
-                <div class="form-group">
-                    <label for="password">Password:</label>
-                    <input type="password" id="password" name="password" required>
-                </div>
-                <div class="form-group">
-                    <label for="password_confirmation">Confirm Password:</label>
-                    <input type="password" id="password_confirmation" name="password_confirmation" required>
-                </div>
-                <button type="submit" class="btn">Register</button>
-            </form>
-            <div class="form-footer">
-                <p>Sudah punya akun? <a href="/login">Login</a></p>
-            </div>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Horizontal Registration</title>
+    <!-- Tailwind CSS CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        .background {
+            background-image: url('/images/bg.jpg'); /* Replace with your background image URL */
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+        }
+    </style>
+</head>
+<body class="background flex items-center justify-center">
+
+    <!-- Main Container -->
+    <div class="bg-white bg-opacity-80 rounded-lg p-8 flex items-center space-x-8 shadow-lg">
+        <!-- Logo Section -->
+        <div class="flex-shrink-0">
+            <img src="/images/Fix2.png" alt="Logo" class="w-40 h-40 rounded-full shadow-lg"> <!-- Adjust the image size as needed -->
         </div>
-    </body>
+
+        <!-- Registration Form -->
+        <div class="w-full max-w-xl"> <!-- Changed max-w-md to max-w-xl -->
+            <h2 class="text-2xl font-bold mb-6 text-center">REGISTRASI</h2>
+            <form class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Email</label>
+                    <input type="text" class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Username</label>
+                    <input type="text" class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">NIM</label>
+                    <input type="text" class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">No. HP</label>
+                    <input type="text" class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                </div>
+                <div class="text-center">
+                    <button type="submit" class="w-full py-2 px-4 bg-blue-600 text-white rounded-md shadow-md hover:bg-blue-700 focus:outline-none">DAFTAR</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</body>
 </html>

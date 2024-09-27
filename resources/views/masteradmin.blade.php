@@ -259,6 +259,11 @@
       <img src="{{ asset('images/Fix2.png') }}" alt="Logo" style="height: 40px; width: auto;"> 
       <!-- Menambahkan teks di samping logo -->
       <span class="ml-2" style="color: white; font-size: 18px; font-weight: bold;">Manajemen Informatika</span>
+      
+            <a class="nav-link" data-widget="pushmenu" href="#" role="button" style="color:white">
+              <i class="fas fa-bars"></i>
+            </a>
+         
     </a>
     
     <ul class="navbar-nav ml-auto">
@@ -272,7 +277,7 @@
             @csrf
           </form>
           <a class="dropdown-item" href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-            <i class="fas fa-sign-out-alt" style="color: #FB8149;"></i> Logout
+            <i class="fas fa-sign-out-alt" style="color: #000c7b;"></i> Logout
           </a>
         </div>
       </li>
@@ -286,11 +291,7 @@
       <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <!-- Tambahkan ikon menu burger di atas dashboard -->
-          <li class="nav-item">
-            <a class="nav-link" data-widget="pushmenu" href="#" role="button">
-              <i class="fas fa-bars"></i>
-            </a>
-          </li>
+          
 
           <li class="nav-item">
             <a href="/dashboardadmin" class="nav-link d-flex align-items-center">

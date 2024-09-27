@@ -17,6 +17,9 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->string('nim')->nullable();  // Menambahkan kolom NIM
+            $table->string('role')->default('pengguna'); // Menambahkan kolom role
+            $table->string('no_hp')->nullable(); // Menambahkan kolom no_hp
             $table->rememberToken();
             $table->timestamps();
         });

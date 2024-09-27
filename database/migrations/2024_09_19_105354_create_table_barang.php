@@ -15,9 +15,6 @@ return new class extends Migration
             $table->bigIncrements('kode_barang');
             $table->string('nama');
             $table->boolean('status')->default(true);
-            $table->unsignedBigInteger('kode_ruang')->nullable();
-
-            $table->foreign('kode_ruang')->references('kode_ruang')->on('ruang')->onDelete('set null'); 
             $table->timestamps();
         });
     }

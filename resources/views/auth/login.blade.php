@@ -135,31 +135,31 @@
             <div class="centered-text">
                 <h2 class="text-2xl mb-4 font-semibold">Login</h2>
             </div>
-            <form method="POST" action="">
-                @csrf
-                <div class="form-group">
-                    <label for="email" class="block mb-2">Email</label>
-                    <div class="form-control">
-                        <span><i class="fas fa-envelope"></i></span>
-                        <input type="email" id="email" name="email" placeholder="Email" required autofocus>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="password" class="block mb-2">Password</label>
-                    <div class="form-control relative">
-                        <span><i class="fas fa-lock"></i></span>
-                        <input type="password" id="password" name="password" placeholder="Password" required>
-                        <span class="absolute inset-y-0 right-0 flex items-center pr-3 cursor-pointer" id="togglePassword">
-                            <i class="fas fa-eye" id="eyeIcon"></i>
-                        </span>
-                    </div>
-                </div>
-                <div class="form-check">
-                    <input type="checkbox" name="remember">
-                    <span>Remember me</span>
-                </div>
-                <button type="submit" class="btn-custom">Sign In</button>
-            </form>
+            <form method="POST" action="{{ route('login') }}">
+    @csrf
+    <div class="form-group">
+        <label for="email" class="block mb-2">Email</label>
+        <div class="form-control">
+            <span><i class="fas fa-envelope"></i></span>
+            <input type="email" id="email" name="email" placeholder="Email" value="{{ old('email') }}" required autofocus>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="password" class="block mb-2">Password</label>
+        <div class="form-control relative">
+            <span><i class="fas fa-lock"></i></span>
+            <input type="password" id="password" name="password" placeholder="Password" required>
+            <span class="absolute inset-y-0 right-0 flex items-center pr-3 cursor-pointer" id="togglePassword">
+                <i class="fas fa-eye" id="eyeIcon"></i>
+            </span>
+        </div>
+    </div>
+    <div class="form-check">
+        <input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}>
+        <span>Remember me</span>
+    </div>
+    <button type="submit" class="btn-custom">Sign In</button>
+</form>
             <div class="text-center mt-4">
                 <p>Don't have an account? <a href="" class="text-blue-500 hover:underline">Sign Up</a></p>
             </div>

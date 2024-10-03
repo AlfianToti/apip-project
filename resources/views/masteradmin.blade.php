@@ -197,7 +197,7 @@
     left: auto;
     width: 100%;
   }
-  
+
   .navbar .nav-item.dropdown .nav-link {
     display: flex;
     justify-content: center;
@@ -231,7 +231,7 @@
     margin-right: 15px;
   }
 
-  
+
 
   .navbar .dropdown-menu {
     position: absolute;
@@ -239,7 +239,7 @@
     left: auto;
     width: 100%;
   }
-  
+
   .navbar .nav-item.dropdown .nav-link {
     display: flex;
     justify-content: center;
@@ -247,7 +247,6 @@
     align-items: center;
   }
 }
-
 </style>
 
 
@@ -256,16 +255,16 @@
   <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #000c7b">
     <a class="navbar-brand d-flex align-items-center" href="#">
       <!-- Sesuaikan ukuran logo dengan menambahkan kelas untuk mengatur ukuran -->
-      <img src="{{ asset('images/Fix2.png') }}" alt="Logo" style="height: 40px; width: auto;"> 
+      <img src="{{ asset('images/Fix2.png') }}" alt="Logo" style="height: 40px; width: auto;">
       <!-- Menambahkan teks di samping logo -->
       <span class="ml-2" style="color: white; font-size: 18px; font-weight: bold;">Manajemen Informatika</span>
-      
+
             <a class="nav-link" data-widget="pushmenu" href="#" role="button" style="color:white">
               <i class="fas fa-bars"></i>
             </a>
-         
+
     </a>
-    
+
     <ul class="navbar-nav ml-auto">
       <li class="nav-item dropdown d-flex align-items-center">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color: white;">
@@ -291,7 +290,7 @@
       <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <!-- Tambahkan ikon menu burger di atas dashboard -->
-          
+
 
           <li class="nav-item">
             <a href="/dashboardadmin" class="nav-link d-flex align-items-center">
@@ -299,7 +298,7 @@
               <p class="ml-2 mb-0">DashBoard</p>
             </a>
           </li>
-          
+
           <li class="nav-item">
             <a href="ruang" class="nav-link">
               <i class="fas fa-chalkboard-teacher"></i>

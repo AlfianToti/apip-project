@@ -1,6 +1,9 @@
 <?php
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\RuangController;
+use App\Http\Controllers\KelasController;
+use App\Http\Controllers\AlatController;
+use App\Http\Controllers\PeminjamanController;
 
 use Illuminate\Support\Facades\Route;
 
@@ -22,9 +25,9 @@ Route::get('/register', function () {
 })->name('register.form');
 
 Route::post('/register', [AuthController::class, 'register'])->name('register');
- 
+
 Route::get('/masteradmin', function (){
-    return view('masteradmin'); 
+    return view('masteradmin');
 });
 
 //Route Ruang
@@ -39,3 +42,8 @@ Route::delete('/ruang/{kode_ruang}', [RuangController::class, 'destroy'])->name(
 Route::get('/masterpengguna', function () {
     return view('pengguna.index');
 })->name('masterpengguna');
+
+Route::get('/kelas', [KelasController::class, 'index'])->name('kelas.index');
+Route::get('/alat', [AlatController::class, 'index'])->name('alat.index');
+Route::get('/peminjaman', [PeminjamanController::class,'index'])->name('peminjaman.index');
+

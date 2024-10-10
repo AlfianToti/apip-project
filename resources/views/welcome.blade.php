@@ -45,8 +45,9 @@
 <div class="flex flex-col justify-center items-center lg:items-start text-center lg:text-left lg:w-1/2 p-6 ml-6 lg:ml-12">
     <h1 class="text-3xl lg:text-4xl font-bold mb-4">Selamat Datang di Web Peminjaman Barang Manajemen Informatika</h1>
     <div class="flex space-x-4 mt-6">
-        <a href="#" class="bg-blue-500 text-white font-semibold px-6 py-3 rounded shadow hover:bg-blue-600 transition duration-300">DAFTAR</a>
-        <a href="#" class="bg-white text-blue-500 font-semibold px-6 py-3 rounded shadow hover:bg-gray-100 transition duration-300">MASUK</a>
+        <a href="register" class="bg-blue-500 text-white font-semibold px-6 py-3 rounded shadow hover:bg-blue-600 transition duration-300">DAFTAR</a>
+
+        <a href="login" class="bg-white text-blue-500 font-semibold px-6 py-3 rounded shadow hover:bg-gray-100 transition duration-300">MASUK</a>
     </div>
 </div>
 

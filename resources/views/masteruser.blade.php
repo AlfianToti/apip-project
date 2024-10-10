@@ -162,7 +162,7 @@
               <form id="logout-form" action="" method="POST" style="display: none;">
                 @csrf
               </form>
-              <a class="dropdown-item" href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+              <a class="dropdown-item" href="login" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                 <i class="fas fa-sign-out-alt" style="color: #000c7b;"></i> Logout
               </a>
             </div>

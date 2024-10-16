@@ -1,6 +1,7 @@
 <?php
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\RuangController;
+use App\Http\Controllers\BarangController;
 use App\Http\Controllers\KelasController;
 use App\Http\Controllers\AlatController;
 use App\Http\Controllers\PeminjamanController;
@@ -37,6 +38,15 @@ Route::post('/ruang', [RuangController::class, 'store'])->name('ruang.store');
 Route::get('/ruang/{kode_ruang}/edit', [RuangController::class, 'edit'])->name('ruang.edit');
 Route::put('/ruang/{kode_ruang}', [RuangController::class, 'update'])->name('ruang.update');
 Route::delete('/ruang/{kode_ruang}', [RuangController::class, 'destroy'])->name('ruang.destroy');
+
+// Route Barang
+Route::get('/barang', [BarangController::class, 'index'])->name('barang.index');
+Route::get('/barang/create', [BarangController::class, 'create'])->name('barang.create');
+Route::post('/barang', [BarangController::class, 'store'])->name('barang.store');
+Route::get('/barang/{kode_barang}/edit', [BarangController::class, 'edit'])->name('barang.edit');
+Route::put('/barang/{kode_barang}', [BarangController::class, 'update'])->name('barang.update');
+Route::delete('/barang/{kode_barang}', [BarangController::class, 'destroy'])->name('barang.destroy');
+
 
 
 Route::get('/masterpengguna', function () {

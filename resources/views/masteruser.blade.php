@@ -153,21 +153,22 @@
     </a>
 
     <ul class="navbar-nav ml-auto">
-        <li class="nav-item dropdown d-flex align-items-center">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color: white;">
-              <img src="{{ asset('images/Test Account.png') }}" alt="User Photo" class="rounded-circle" style="height: 30px; width: 30px;">
-              {{ Auth::user()->name }}
-            </a>
-            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-              <form id="logout-form" action="" method="POST" style="display: none;">
+    <li class="nav-item dropdown d-flex align-items-center">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color: white;">
+            <img src="{{ asset('images/Test Account.png') }}" alt="User Photo" class="rounded-circle" style="height: 30px; width: 30px;">
+            {{ Auth::user()->name }}
+        </a>
+        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                 @csrf
-              </form>
-              <a class="dropdown-item" href="login" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+            </form>
+            <a class="dropdown-item" href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                 <i class="fas fa-sign-out-alt" style="color: #000c7b;"></i> Logout
-              </a>
-            </div>
-          </li>
-    </ul>
+            </a>
+        </div>
+    </li>
+</ul>
+
   </nav>
 
   <div class="wrapper">

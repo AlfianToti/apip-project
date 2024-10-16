@@ -25,8 +25,7 @@
             </div>
         @endif
 
-        <h1 class="mb-4">Data Kelas</h1>
-
+        <h1 class="mb-4">Data Ruang</h1>
         <div class="mb-3 d-flex justify-content-between">
             <div>
                 <label for="show" class="mr-2">Show</label>
@@ -40,7 +39,6 @@
                 <input type="text" class="form-control w-75 d-inline-block" placeholder="Search">
             </div>
         </div>
-
         <table class="table table-bordered">
             <thead>
                 <tr class="table-primary">
@@ -50,6 +48,13 @@
                 </tr>
             </thead>
             <tbody>
+                @foreach ($ruangs as $ruang)
+                    <tr>
+                        <td>{{ $loop->iteration }}</td>
+                        <td>{{ $ruang->nama_ruang }}</td>
+                        <td>{{ $ruang->status ? 'Tersedia' : 'Tidak Tersedia' }}</td>
+                    </tr>
+                @endforeach
             </tbody>
         </table>
     </div>

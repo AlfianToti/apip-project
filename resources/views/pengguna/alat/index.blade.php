@@ -25,7 +25,7 @@
             </div>
         @endif
 
-        <h1 class="mb-4">Data Alat</h1>
+        <h1 class="mb-4">Data Barang</h1>
 
         <div class="mb-3 d-flex justify-content-between">
             <div>
@@ -47,10 +47,18 @@
                     <th>No</th>
                     <th>Nama alat</th>
                     <th>Status</th>
-                    <th>Nama kelas</th>
+                  
                 </tr>
             </thead>
             <tbody>
+                @foreach ($barang as $barang)
+                    <tr>
+                        <td>{{ $loop->iteration }}</td>
+                        <td>{{ $barang->nama }}</td>
+                        <td>{{ $barang->status ? 'Tersedia' : 'Tidak Tersedia' }}</td>
+                       
+                    </tr>
+                @endforeach
             </tbody>
         </table>
     </div>

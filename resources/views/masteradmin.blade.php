@@ -266,21 +266,25 @@
     </a>
 
     <ul class="navbar-nav ml-auto">
-      <li class="nav-item dropdown d-flex align-items-center">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color: white;">
-          <img src="{{ asset('images/Test Account.png') }}" alt="User Photo" class="rounded-circle" style="height: 30px; width: 30px;">
-          Admin
-        </a>
-        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-          <form id="logout-form" action="" method="POST" style="display: none;">
-            @csrf
-          </form>
-          <a class="dropdown-item" href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-            <i class="fas fa-sign-out-alt" style="color: #000c7b;"></i> Logout
-          </a>
-        </div>
-      </li>
-    </ul>
+  <li class="nav-item dropdown d-flex align-items-center">
+    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color: white;">
+      <img src="{{ asset('images/Test Account.png') }}" alt="User Photo" class="rounded-circle" style="height: 30px; width: 30px;">
+      Admin
+    </a>
+    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+      <!-- Form logout -->
+      <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+        @csrf
+      </form>
+      
+      <!-- Link untuk trigger logout -->
+      <a class="dropdown-item" href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+        <i class="fas fa-sign-out-alt" style="color: #000c7b;"></i> Logout
+      </a>
+    </div>
+  </li>
+</ul>
+
   </nav>
 
 
@@ -306,7 +310,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="" class="nav-link">
+            <a href="barang" class="nav-link">
               <i class="fas fa-box"></i>
               <p>Data Barang</p>
             </a>

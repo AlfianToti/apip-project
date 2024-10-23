@@ -57,3 +57,6 @@ Route::get('/kelas', [KelasController::class, 'index'])->name('kelas.index');
 Route::get('/alat', [AlatController::class, 'index'])->name('alat.index');
 Route::get('/peminjaman', [PeminjamanController::class,'index'])->name('peminjaman.index');
 
+Route::get('/adminusers', [AuthController::class, 'showUsers'])->name('admin.users');
+Route::delete('/admin/users/{id}', [AuthController::class, 'destroy'])->name('admin.users.destroy');
+

@@ -88,4 +88,23 @@ class AuthController extends Controller
  
          return redirect('/');
      }
+
+     public function showUsers()
+    {
+       
+        $users = User::where('role', '!=', 'admin')->get();
+
+       
+        return view('admin.datapengguna', compact('users'));
+    }
+
+    public function destroy($id)
+    {
+        
+        $user = User::findOrFail($id);
+        $user->delete();
+
+       
+        return redirect()->route('admin.users')->with('success', 'Pengguna berhasil dihapus.');
+    }
 }

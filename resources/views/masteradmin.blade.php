@@ -316,7 +316,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="" class="nav-link">
+            <a href="adminusers" class="nav-link">
               <i class="fas fa-users"></i>
               <p>Data User</p>
             </a>

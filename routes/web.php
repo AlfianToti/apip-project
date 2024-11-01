@@ -5,6 +5,7 @@ use App\Http\Controllers\BarangController;
 use App\Http\Controllers\KelasController;
 use App\Http\Controllers\AlatController;
 use App\Http\Controllers\PeminjamanController;
+use App\Http\Controllers\DashboardController;
 
 use Illuminate\Support\Facades\Route;
 
@@ -59,4 +60,6 @@ Route::get('/peminjaman', [PeminjamanController::class,'index'])->name('peminjam
 
 Route::get('/adminusers', [AuthController::class, 'showUsers'])->name('admin.users');
 Route::delete('/admin/users/{id}', [AuthController::class, 'destroy'])->name('admin.users.destroy');
+
+Route::get('/admindashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
 

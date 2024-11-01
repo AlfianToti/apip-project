@@ -297,7 +297,7 @@
 
 
           <li class="nav-item">
-            <a href="/dashboardadmin" class="nav-link d-flex align-items-center">
+            <a href="{{ route('admin.dashboard') }}" class="nav-link d-flex align-items-center">
               <i class="fas fa-home"></i>
               <p class="ml-2 mb-0">DashBoard</p>
             </a>

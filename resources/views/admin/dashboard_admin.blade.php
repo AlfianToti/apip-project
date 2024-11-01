@@ -1,80 +1,48 @@
-<!-- File: dashboard_admin.blade.php -->
 
-@extends('layouts.app')
+@extends('masteradmin')
+
+
 
 @section('content')
-<div class="container">
-    <div class="row">
-        <div class="col-md-2">
-            <div class="list-group">
-                <a href="#" class="list-group-item list-group-item-action active">
-                    <i class="fas fa-tachometer-alt"></i> Dashboard
-                </a>
-                <a href="#" class="list-group-item list-group-item-action">
-                    <i class="fas fa-school"></i> Data Kelas
-                </a>
-                <a href="#" class="list-group-item list-group-item-action">
-                    <i class="fas fa-box"></i> Data Barang
-                </a>
-                <a href="#" class="list-group-item list-group-item-action">
-                    <i class="fas fa-users"></i> Data User
-                </a>
-                <a href="#" class="list-group-item list-group-item-action">
-                    <i class="fas fa-book"></i> Data Peminjaman
-                </a>
+<!-- Small boxes (Stat box) -->
+<div class="row justify-content-center mx-auto mt-3">
+    <!-- Total Barang -->
+    <div class="col-md-4 col-6">
+        <div class="small-box bg-info">
+            <div class="inner text-white">
+                <h3>{{ $totalBarang }}</h3>
+                <p>Total Barang</p>
+            </div>
+            <div class="icon">
+                <i class="ion ion-cube"></i>
             </div>
         </div>
-        <div class="col-md-10">
-            <h2>Dashboard</h2>
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">Card 1</h5>
-                            <p class="card-text">Some example text.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">Card 2</h5>
-                            <p class="card-text">Some example text.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">Card 3</h5>
-                            <p class="card-text">Some example text.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">Card 4</h5>
-                            <p class="card-text">Some example text.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">Card 5</h5>
-                            <p class="card-text">Some example text.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">Card 6</h5>
-                            <p class="card-text">Some example text.</p>
-                        </div>
-                    </div>
-                </div>
+    </div>
+
+    <!-- Total Ruang -->
+    <div class="col-md-4 col-6">
+        <div class="small-box bg-warning">
+            <div class="inner text-white">
+                <h3>{{ $totalRuang }}</h3>
+                <p>Total Ruang</p>
+            </div>
+            <div class="icon">
+                <i class="ion ion-home"></i>
+            </div>
+        </div>
+    </div>
+
+    
+
+    <!-- Total Users -->
+    <div class="col-md-4 col-6">
+        <div class="small-box bg-primary">
+            <div class="inner text-white">
+                <h3>{{ $totalUsers }}</h3>
+                <p>Total Users</p>
+            </div>
+            <div class="icon">
+                <i class="ion ion-person"></i>
             </div>
         </div>
     </div>

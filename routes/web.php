@@ -63,3 +63,4 @@ Route::delete('/admin/users/{id}', [AuthController::class, 'destroy'])->name('ad
 
 Route::get('/admindashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
 
+Route::resource('peminjaman', PeminjamanController::class);

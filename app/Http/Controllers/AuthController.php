@@ -65,7 +65,7 @@ class AuthController extends Controller
             // Cek apakah user adalah admin
             if ($user->role === 'admin') {
                 // Redirect ke halaman admin jika user adalah admin
-                return redirect()->intended('/masteradmin');
+                return redirect()->intended('/admindashboard');
             } else {
                 // Redirect ke halaman user biasa jika bukan admin
                 return redirect()->intended('/masterpengguna');

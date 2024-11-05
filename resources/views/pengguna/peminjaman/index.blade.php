@@ -25,7 +25,7 @@
             </div>
         @endif
 
-        <h1 class="mb-4">Data Peminjaman</h1>
+        <h1 class="mb-4">Riwayat Peminjaman Anda</h1>
 
         <div class="mb-3 d-flex justify-content-between">
             <div>
@@ -37,7 +37,8 @@
                 </select>
             </div>
             <div>
-                <input type="text" class="form-control w-75 d-inline-block" placeholder="Search">
+                <input type="text" class="form-control w-50 d-inline-block" placeholder="Search">
+                <a href="{{ route('peminjaman.create') }}" class="btn btn-success ml-2">Buat Peminjaman</a>
             </div>
         </div>
 
@@ -51,7 +52,6 @@
                     <th>Pinjam</th>
                     <th>Kembali</th>
                     <th>Status</th>
-                    <th>Aksi</th>
                 </tr>
             </thead>
             <tbody>

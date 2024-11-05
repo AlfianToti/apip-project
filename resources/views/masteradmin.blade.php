@@ -291,46 +291,68 @@
   <div class="wrapper">
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <div class="sidebar">
-      <nav class="mt-2">
-        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-          <!-- Tambahkan ikon menu burger di atas dashboard -->
+        <nav class="mt-2">
+            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                <li class="nav-item">
+                    <a href="{{ route('admin.dashboard') }}" class="nav-link d-flex align-items-center">
+                        <i class="fas fa-home"></i>
+                        <p class="ml-2 mb-0">DashBoard</p>
+                    </a>
+                </li>
 
-
-          <li class="nav-item">
-            <a href="{{ route('admin.dashboard') }}" class="nav-link d-flex align-items-center">
-              <i class="fas fa-home"></i>
-              <p class="ml-2 mb-0">DashBoard</p>
-            </a>
-          </li>
-
-          <li class="nav-item">
-            <a href="ruang" class="nav-link">
-              <i class="fas fa-chalkboard-teacher"></i>
-              <p>Data Ruang</p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="barang" class="nav-link">
-              <i class="fas fa-box"></i>
-              <p>Data Barang</p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="adminusers" class="nav-link">
-              <i class="fas fa-users"></i>
-              <p>Data User</p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="" class="nav-link">
-              <i class="fas fa-hand-holding-heart"></i>
-              <p>Data Peminjaman</p>
-            </a>
-          </li>
-        </ul>
-      </nav>
+                <li class="nav-item">
+                    <a href="ruang" class="nav-link">
+                        <i class="fas fa-chalkboard-teacher"></i>
+                        <p>Data Ruang</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="barang" class="nav-link">
+                        <i class="fas fa-box"></i>
+                        <p>Data Barang</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="adminusers" class="nav-link">
+                        <i class="fas fa-users"></i>
+                        <p>Data User</p>
+                    </a>
+                </li>
+                
+                <!-- Menu Dropdown untuk Data Peminjaman -->
+                <li class="nav-item has-treeview">
+                    <a href="#" class="nav-link">
+                        <i class="fas fa-hand-holding-heart"></i>
+                        <p>
+                            Data Peminjaman
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Request Peminjaman</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Request Pengembalian</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Laporan Peminjaman</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
     </div>
-  </aside>
+</aside>
 </div>
 
 

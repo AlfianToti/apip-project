@@ -21,8 +21,10 @@ class AuthController extends Controller
         // Validasi input dari form register
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
+            'nim' => 'nullable|string|max:20',
+            'no_hp' => 'nullable|string|max:15',
             'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required',
+            'password' => 'required|string|min:8|confirmed',
            
         ]);
 
@@ -47,36 +49,38 @@ class AuthController extends Controller
 
      // Login Method
      public function login(Request $request)
-     {
-         // Validasi input dari form login
-         $credentials = $request->validate([
-             'email' => 'required|email',
-             'password' => 'required|min:2',
-         ]);
- 
-         // Cek kredensial login
-         if (Auth::attempt($credentials, $request->remember)) {
+    {
+        // Validasi input dari form login
+        $credentials = $request->validate([
+            'email' => 'required|email',
+            'password' => 'required|min:8',
+        ]);
+
+        // Cek apakah pengguna ingin diingat (remember me)
+        $remember = $request->has('remember');
+
+        // Cek kredensial login
+        if (Auth::attempt($credentials, $remember)) {
             // Jika login berhasil, regenerasi session
             $request->session()->regenerate();
-    
+
             // Ambil user yang login
             $user = Auth::user();
-    
-            // Cek apakah user adalah admin
+
+            // Redirect berdasarkan peran
             if ($user->role === 'admin') {
-                // Redirect ke halaman admin jika user adalah admin
                 return redirect()->intended('/admindashboard');
             } else {
-                // Redirect ke halaman user biasa jika bukan admin
                 return redirect()->intended('/masterpengguna');
             }
         }
- 
-         // Jika login gagal, redirect kembali ke halaman login dengan pesan error
-         return back()->withErrors([
-             'email' => 'Email atau password salah.',
-         ])->withInput($request->except('password'));
-     }
+
+        // Jika login gagal, redirect kembali ke halaman login dengan pesan error
+        return back()->withErrors([
+            'email' => 'Email atau password salah.',
+        ])->withInput($request->except('password'));
+    }
+
  
      // Logout Method
      public function logout(Request $request)
@@ -86,14 +90,13 @@ class AuthController extends Controller
          $request->session()->invalidate();
          $request->session()->regenerateToken();
  
-         return redirect('/');
+         return redirect('/login');
      }
 
      public function showUsers()
     {
        
-        $users = User::where('role', '!=', 'admin')->get();
-
+        $users = User::where('role', '!=', 'admin')->paginate(10);
        
         return view('admin.datapengguna', compact('users'));
     }

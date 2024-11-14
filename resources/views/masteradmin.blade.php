@@ -293,6 +293,8 @@
     <div class="sidebar">
         <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                
+                <!-- Dashboard -->
                 <li class="nav-item">
                     <a href="{{ route('admin.dashboard') }}" class="nav-link d-flex align-items-center">
                         <i class="fas fa-home"></i>
@@ -300,26 +302,31 @@
                     </a>
                 </li>
 
+                <!-- Data Ruang -->
                 <li class="nav-item">
-                    <a href="ruang" class="nav-link">
+                    <a href="{{ route('ruang.index') }}" class="nav-link">
                         <i class="fas fa-chalkboard-teacher"></i>
                         <p>Data Ruang</p>
                     </a>
                 </li>
+
+                <!-- Data Barang -->
                 <li class="nav-item">
-                    <a href="barang" class="nav-link">
+                    <a href="{{ route('barang.index') }}" class="nav-link">
                         <i class="fas fa-box"></i>
                         <p>Data Barang</p>
                     </a>
                 </li>
+
+                <!-- Data User -->
                 <li class="nav-item">
-                    <a href="adminusers" class="nav-link">
+                    <a href="{{ route('admin.users') }}" class="nav-link">
                         <i class="fas fa-users"></i>
                         <p>Data User</p>
                     </a>
                 </li>
                 
-                <!-- Menu Dropdown untuk Data Peminjaman -->
+                <!-- Data Peminjaman Menu -->
                 <li class="nav-item has-treeview">
                     <a href="#" class="nav-link">
                         <i class="fas fa-hand-holding-heart"></i>
@@ -329,20 +336,25 @@
                         </p>
                     </a>
                     <ul class="nav nav-treeview">
+                        <!-- Request Peminjaman -->
                         <li class="nav-item">
-                            <a href="" class="nav-link">
+                            <a href="{{ route('admin.request.peminjaman') }}" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Request Peminjaman</p>
                             </a>
                         </li>
+                        
+                        <!-- Request Pengembalian -->
                         <li class="nav-item">
-                            <a href="" class="nav-link">
+                            <a href="{{ route('admin.request.pengembalian') }}" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Request Pengembalian</p>
                             </a>
                         </li>
+                        
+                        <!-- Laporan Peminjaman -->
                         <li class="nav-item">
-                            <a href="" class="nav-link">
+                            <a href="{{ route('admin.laporan.peminjaman') }}" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Laporan Peminjaman</p>
                             </a>

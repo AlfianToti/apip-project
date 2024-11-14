@@ -42,7 +42,7 @@
                         <tr>
                             <td>{{ $barang->kode_barang }}</td>
                             <td>{{ $barang->nama }}</td>
-                            <td>{{ $barang->status ? 'Tersedia' : 'Tidak Tersedia' }}</td>
+                            <td>{{ $barang->status }}</td>
                             <td>
                                 <a href="{{ route('barang.edit', $barang->kode_barang) }}" class="btn btn-sm btn-warning">Edit</a>
                                 <form action="{{ route('barang.destroy', $barang->kode_barang) }}" method="POST" style="display:inline;">

@@ -31,8 +31,8 @@ Route::middleware('guest')->group(function () {
     // Route untuk register    
     Route::get('/register', function () {
         return view('auth.register');
-    })->name('register.form');
-    Route::post('/register', [AuthController::class, 'register'])->name('register');
+    })->name('register');
+    Route::post('/register', [AuthController::class, 'register']);
 });
 
 // Route untuk logout yang hanya bisa diakses oleh pengguna yang sudah login
@@ -63,6 +63,18 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/adminusers', [AuthController::class, 'showUsers'])->name('admin.users');
     Route::delete('/admin/users/{id}', [AuthController::class, 'destroy'])->name('admin.users.destroy');
     Route::get('/admindashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
+
+    // Route untuk approval peminjaman dan pengembalian
+    Route::get('/admin/request-peminjaman', [PeminjamanController::class, 'adminIndex'])->name('admin.request.peminjaman');
+    Route::post('/admin/request-peminjaman/{id}/approve', [PeminjamanController::class, 'approve'])->name('admin.request.peminjaman.approve');
+    Route::post('/admin/request-peminjaman/{id}/reject', [PeminjamanController::class, 'reject'])->name('admin.request.peminjaman.reject');
+
+    Route::get('/admin/request-pengembalian', [PeminjamanController::class, 'adminReturnIndex'])->name('admin.request.pengembalian');
+    Route::post('/admin/request-pengembalian/{id}/approve', [PeminjamanController::class, 'approveReturn'])->name('admin.request.pengembalian.approve');
+    Route::post('/admin/request-pengembalian/{id}/reject', [PeminjamanController::class, 'rejectReturn'])->name('admin.request.pengembalian.reject');
+
+    // Route untuk laporan
+    Route::get('/admin/laporan-peminjaman', [PeminjamanController::class, 'laporan'])->name('admin.laporan.peminjaman');
 });
 
 // Route khusus untuk pengguna
@@ -75,6 +87,10 @@ Route::middleware(['auth', 'role:pengguna'])->group(function () {
     // Route untuk lihat barang
     Route::get('/alat', [AlatController::class, 'index'])->name('alat.index');
     // Route untuk crud peminjaman
-    Route::get('/peminjaman', [PeminjamanController::class,'index'])->name('peminjaman.index');
-    Route::resource('peminjaman', PeminjamanController::class);
+    Route::get('/peminjaman', [PeminjamanController::class, 'index'])->name('peminjaman.index');
+    Route::get('/keranjang', [PeminjamanController::class, 'createKeranjang'])->name('peminjaman.keranjang');
+    Route::post('/keranjang/add', [PeminjamanController::class, 'addToKeranjang'])->name('peminjaman.keranjang.add');
+    Route::post('/keranjang/store', [PeminjamanController::class, 'storeKeranjang'])->name('peminjaman.keranjang.store');
+    Route::post('/peminjaman/{id}/return', [PeminjamanController::class, 'requestReturn'])->name('peminjaman.return');
+    Route::post('/keranjang/remove/{id}', [PeminjamanController::class, 'removeFromKeranjang'])->name('peminjaman.keranjang.remove');
 });

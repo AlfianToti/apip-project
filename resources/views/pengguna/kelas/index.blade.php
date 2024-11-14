@@ -52,7 +52,7 @@
                     <tr>
                         <td>{{ $loop->iteration }}</td>
                         <td>{{ $ruang->nama_ruang }}</td>
-                        <td>{{ $ruang->status ? 'Tersedia' : 'Tidak Tersedia' }}</td>
+                        <td>{{ $ruang->status }}</td>
                     </tr>
                 @endforeach
             </tbody>

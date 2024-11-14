@@ -15,9 +15,16 @@ class Barang extends Model
     // Primary key dari tabel barang
     protected $primaryKey = 'kode_barang';
 
-    // Kolom yang bisa diisi secara massal
-    protected $fillable = ['nama', 'status'];
+    // Tipe primary key
+    protected $keyType = 'string'; 
+
+    // Kolom yang bisa diisi
+    protected $fillable = ['kode_barang', 'nama_barang', 'status'];
 
     // Secara default, Laravel akan mengelola kolom created_at dan updated_at
     public $timestamps = true;
+    public function detailPeminjaman()
+    {
+        return $this->hasMany(DetailPeminjaman::class, 'kode_barang');
+    }
 }

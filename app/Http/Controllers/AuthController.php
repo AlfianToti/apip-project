@@ -22,10 +22,9 @@ class AuthController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'nim' => 'nullable|string|max:20',
-            'no_hp' => 'nullable|string|max:15',
+            'no_hp' => 'nullable|string|max:15|regex:/^([0-9\s\-\+\(\)]*)$/', // Adding phone number regex
             'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:8|confirmed',
-           
+            'password' => 'required|string|min:8|confirmed', // Adding password confirmation rule
         ]);
 
         // Cek jika validasi gagal
@@ -47,8 +46,8 @@ class AuthController extends Controller
         return redirect()->route('login')->with('success', 'Registrasi berhasil, silakan login.');
     }
 
-     // Login Method
-     public function login(Request $request)
+    // Login Method
+    public function login(Request $request)
     {
         // Validasi input dari form login
         $credentials = $request->validate([
@@ -81,33 +80,30 @@ class AuthController extends Controller
         ])->withInput($request->except('password'));
     }
 
- 
-     // Logout Method
-     public function logout(Request $request)
-     {
-         Auth::logout();
- 
-         $request->session()->invalidate();
-         $request->session()->regenerateToken();
- 
-         return redirect('/login');
-     }
-
-     public function showUsers()
+    // Logout Method
+    public function logout(Request $request)
     {
-       
+        Auth::logout();
+
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect('/login');
+    }
+
+    // Show Users Method for Admin
+    public function showUsers()
+    {
         $users = User::where('role', '!=', 'admin')->paginate(10);
-       
         return view('admin.datapengguna', compact('users'));
     }
 
+    // Destroy User Method for Admin
     public function destroy($id)
     {
-        
         $user = User::findOrFail($id);
         $user->delete();
 
-       
         return redirect()->route('admin.users')->with('success', 'Pengguna berhasil dihapus.');
     }
 }

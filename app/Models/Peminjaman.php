@@ -14,34 +14,32 @@ class Peminjaman extends Model
 
     // Primary key dari tabel
     protected $primaryKey = 'kode_pinjam';
+    
+    // Tipe primary key
+    protected $keyType = 'string';
 
     // Kolom yang dapat diisi (mass assignment)
     protected $fillable = [
+        'kode_pinjam',
         'user_id',
-        'barang_id',
-        'ruang_id',
+        'kode_ruang',
         'tanggal_pinjam',
         'tanggal_kembali',
         'catatan',
+        'status',
     ];
-
-    // Jika primary key bukan increment integer bawaan Laravel
-    public $incrementing = true;
-    protected $keyType = 'bigint';
-
     // Relasi jika ada
     public function user()
     {
         return $this->belongsTo(User::class);
     }
 
-    public function barang()
-    {
-        return $this->belongsTo(Barang::class);
-    }
-
     public function ruang()
     {
         return $this->belongsTo(Ruang::class);
+    }
+    public function detailPeminjaman()
+    {
+        return $this->hasMany(DetailPeminjaman::class, 'kode_pinjam');
     }
 }

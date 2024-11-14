@@ -38,7 +38,7 @@
             </div>
             <div>
                 <input type="text" class="form-control w-50 d-inline-block" placeholder="Search">
-                <a href="{{ route('peminjaman.create') }}" class="btn btn-success ml-2">Buat Peminjaman</a>
+                <a href="{{ route('peminjaman.keranjang') }}" class="btn btn-success ml-2">Lihat Keranjang</a>
             </div>
         </div>
 
@@ -48,13 +48,28 @@
                     <th>No</th>
                     <th>Nama</th>
                     <th>Barang</th>
-                    <th>Kelas</th>
-                    <th>Pinjam</th>
-                    <th>Kembali</th>
+                    <th>Ruang</th>
+                    <th>Tanggal Pinjam</th>
+                    <th>Tanggal Kembali</th>
                     <th>Status</th>
                 </tr>
             </thead>
             <tbody>
+                @forelse ($peminjamans as $peminjaman)
+                    <tr>
+                        <td>{{ $loop->iteration }}</td>
+                        <td>{{ $peminjaman->user->name }}</td>
+                        <td>{{ $peminjaman->barang->nama }}</td>
+                        <td>{{ $peminjaman->ruang->nama_ruang }}</td>
+                        <td>{{ $peminjaman->tanggal_pinjam }}</td>
+                        <td>{{ $peminjaman->tanggal_kembali }}</td>
+                        <td>{{ ucfirst($peminjaman->status) }}</td>
+                    </tr>
+                @empty
+                    <tr>
+                        <td colspan="7" class="text-center">Belum ada riwayat peminjaman.</td>
+                    </tr>
+                @endforelse
             </tbody>
         </table>
     </div>

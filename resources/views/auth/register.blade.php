@@ -59,11 +59,17 @@
                         <input type="password" name="password" class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" required>
                     </div>
                 </div>
-
-                <!-- No. HP -->
-                <div>
-                    <label class="block text-sm font-medium text-gray-700">No. HP</label>
-                    <input type="text" name="no_hp" class="mt-1 block w-1/2 px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                <div class="flex space-x-4">
+                    <!-- No. HP -->
+                    <div class="w-1/2">    
+                        <label class="block text-sm font-medium text-gray-700">No. HP</label>
+                        <input type="text" name="no_hp" class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                    </div>
+                    <!-- Confirm Password -->
+                    <div class="w-1/2">
+                        <label class="block text-sm font-medium text-gray-700">Confirm Password</label>
+                        <input type="password" name="password_confirmation" class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" required>
+                    </div>
                 </div>
 
                 <!-- Submit Button -->
@@ -71,6 +77,9 @@
                     <button type="submit" class="w-1/2 py-2 px-4 bg-blue-600 text-white rounded-md shadow-md hover:bg-blue-700 focus:outline-none">DAFTAR</button>
                 </div>
             </form>
+            <div class="mt-4 text-center">
+                <p class="text-sm">Already have an account? <a href="{{ route('login') }}" class="text-blue-500">Login here</a></p>
+            </div>
         </div>
     </div>
 

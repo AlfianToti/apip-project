@@ -54,8 +54,8 @@
                 @foreach ($barang as $barang)
                     <tr>
                         <td>{{ $loop->iteration }}</td>
-                        <td>{{ $barang->nama }}</td>
-                        <td>{{ $barang->status ? 'Tersedia' : 'Tidak Tersedia' }}</td>
+                        <td>{{ $barang->nama_barang }}</td>
+                        <td>{{ $barang->status }}</td>
                        
                     </tr>
                 @endforeach

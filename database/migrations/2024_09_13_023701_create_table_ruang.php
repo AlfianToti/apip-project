@@ -12,9 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('ruang', function (Blueprint $table) {
-            $table->bigIncrements('kode_ruang');
+            $table->string('kode_ruang')->primary();
             $table->string('nama_ruang');
-            $table->boolean('status')->default(true);
+            $table->enum('status', ['Tersedia', 'Dipinjam'])->default('Tersedia');
             $table->timestamps();
         });
     }

@@ -1,78 +1,81 @@
 @extends('masteruser')
 
 @section('content')
-<div class="container mt-5 mb-5 px-2">
-    <div class="container-fluid">
-        @if(session('success'))
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                {{ session('success') }}
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+<div class="container">
+    <h2>Keranjang Peminjaman Barang</h2>
+
+    <!-- Pesan Sukses/Error -->
+    @if(session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+    @endif
+
+    @if($errors->any())
+        <div class="alert alert-danger">
+            {{ $errors->first() }}
+        </div>
+    @endif
+
+    <!-- Form untuk Menambahkan Barang ke Keranjang -->
+    <div class="mb-4">
+        <form action="{{ route('keranjang.store') }}" method="POST">
+        @csrf
+            <div class="row">
+                <div class="col-md-8">
+                    <label for="kode_barang" class="form-label">Pilih Barang</label>
+                    <select name="kode_barang" id="kode_barang" class="form-select" required>
+                        <option value="">-- Pilih Barang --</option>
+                        @foreach($barangTersedia as $barang)
+                            <option value="{{ $barang->kode_barang }}">{{ $barang->nama_barang }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="col-md-4 align-self-end">
+                    <button type="submit" class="btn btn-success w-100">Tambahkan ke Keranjang</button>
+                </div>
             </div>
-        @endif
-
-        @if(session('error'))
-            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                {{ session('error') }}
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-        @endif
-
-        <h1 class="mb-4">Keranjang Peminjaman Anda</h1>
-
-        <!-- Form untuk Menambahkan Barang ke Keranjang -->
-        <form action="{{ route('peminjaman.keranjang.add') }}" method="POST" class="mb-4">
-            @csrf
-            <div class="form-group">
-                <label for="kode_barang">Pilih Barang</label>
-                <select name="barang_id" class="form-control">
-                    <option value="">Pilih Barang</option>
-                    @foreach($barangs as $barang)
-                        <option value="{{ $barang->id }}">{{ $barang->nama_barang }}</option>
-                    @endforeach
-                </select>
-            </div>
-
-            <div class="form-group">
-                <label for="kode_ruang">Pilih Ruangan</label>
-                <select name="kode_ruang" id="kode_ruang" class="form-control" required>
-                    <option value="" disabled selected>Pilih Ruangan</option>
-                    @foreach($ruangs as $ruang)
-                        <option value="{{ $ruang->kode_ruang }}">{{ $ruang->nama_ruang }}</option>
-                    @endforeach
-                </select>
-            </div>
-
-            <button type="submit" class="btn btn-primary">Tambahkan ke Keranjang</button>
         </form>
 
-        <!-- Tabel Keranjang -->
-        <table class="table table-bordered">
+    </div>
+
+    <!-- Tabel Barang dalam Keranjang -->
+    @if($barangDipinjam->isEmpty())
+        <p>Keranjang peminjaman kosong. Silakan tambahkan barang yang ingin dipinjam.</p>
+    @else
+        <table class="table">
             <thead>
                 <tr>
-                    <th>No</th>
+                    <th>Kode Barang</th>
                     <th>Nama Barang</th>
+                    <th>Status</th>
                     <th>Aksi</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach($keranjangItems as $index => $item)
+                @foreach($barangDipinjam as $detail)
                     <tr>
-                        <td>{{ $index + 1 }}</td>
-                        <td>{{ $item->barang->nama_barang }}</td>
+                        <td>{{ $detail->barang->kode_barang }}</td>
+                        <td>{{ $detail->barang->nama_barang }}</td>
+                        <td>{{ $detail->barang->status }}</td>
                         <td>
-                            <form action="{{ route('peminjaman.keranjang.remove', $item->id) }}" method="POST">
+                            <!-- Form untuk menghapus barang -->
+                            <form action="{{ route('keranjang.remove', $detail->kode_detail) }}" method="POST">
                                 @csrf
-                                <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger">Hapus</button>
                             </form>
                         </td>
                     </tr>
                 @endforeach
             </tbody>
         </table>
-    </div>
+
+        <!-- Tombol Ajukan Peminjaman Barang -->
+        <form action="{{ route('keranjang.submit') }}" method="POST">
+            @csrf
+            <button type="submit" class="btn btn-primary">Ajukan Peminjaman Barang</button>
+        </form>
+    @endif
 </div>
 @endsection

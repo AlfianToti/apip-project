@@ -36,8 +36,8 @@
                 <div class="form-group mb-3">
                     <label for="status">Status:</label>
                     <select class="form-control" id="status" name="status">
-                        <option value="1">Digunakan</option>
-                        <option value="0">Tidak Digunakan</option>
+                        <option value="Dipinjam">Digunakan</option>
+                        <option value="Tersedia">Tidak Digunakan</option>
                     </select>
                 </div>
                 <div class="d-flex justify-content-between">

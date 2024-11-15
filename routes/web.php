@@ -1,5 +1,6 @@
 <?php
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\KeranjangController;
 use App\Http\Controllers\RuangController;
 use App\Http\Controllers\BarangController;
 use App\Http\Controllers\KelasController;
@@ -87,10 +88,31 @@ Route::middleware(['auth', 'role:pengguna'])->group(function () {
     // Route untuk lihat barang
     Route::get('/alat', [AlatController::class, 'index'])->name('alat.index');
     // Route untuk crud peminjaman
-    Route::get('/peminjaman', [PeminjamanController::class, 'index'])->name('peminjaman.index');
-    Route::get('/keranjang', [PeminjamanController::class, 'createKeranjang'])->name('peminjaman.keranjang');
-    Route::post('/keranjang/add', [PeminjamanController::class, 'addToKeranjang'])->name('peminjaman.keranjang.add');
-    Route::post('/keranjang/store', [PeminjamanController::class, 'storeKeranjang'])->name('peminjaman.keranjang.store');
-    Route::post('/peminjaman/{id}/return', [PeminjamanController::class, 'requestReturn'])->name('peminjaman.return');
-    Route::post('/keranjang/remove/{id}', [PeminjamanController::class, 'removeFromKeranjang'])->name('peminjaman.keranjang.remove');
+    // Route untuk menampilkan riwayat peminjaman
+    Route::get('/peminjaman', [PeminjamanController::class, 'indexRiwayat'])->name('peminjaman.index');
+    
+    // Route untuk menampilkan detail peminjaman tertentu (opsional)
+    Route::get('/peminjaman/{kode_pinjam}', [PeminjamanController::class, 'show'])->name('peminjaman.show');
+    
+    // Route untuk menampilkan form pembuatan janji peminjaman
+    Route::get('/buat-peminjaman', [PeminjamanController::class, 'indexPeminjaman'])->name('peminjaman.ruangan.index');
+    
+    // Route untuk menyimpan janji peminjaman yang baru
+    Route::post('/buat-peminjaman', [PeminjamanController::class, 'store'])->name('peminjaman.ruangan.store');
+
+    // Route untuk menampilkan keranjang peminjaman barang
+    Route::get('/keranjang', [KeranjangController::class, 'index'])->name('keranjang.index');
+    
+    // Route untuk menampilkan form penambahan barang ke keranjang
+    Route::get('/keranjang/create', [KeranjangController::class, 'create'])->name('keranjang.create');
+    
+    // Route untuk menambah barang ke keranjang
+    Route::post('/keranjang/store', [KeranjangController::class, 'store'])->name('keranjang.store');
+    
+    // Route untuk menghapus barang dari keranjang
+    Route::delete('/keranjang/{kode_detail}', [KeranjangController::class, 'remove'])->name('keranjang.remove');
+    
+    // Route untuk menyelesaikan peminjaman barang di keranjang
+    Route::post('/keranjang/submit', [KeranjangController::class, 'submit'])->name('keranjang.submit');
+
 });

@@ -48,7 +48,6 @@
                 <tr>
                     <th>Kode Barang</th>
                     <th>Nama Barang</th>
-                    <th>Status</th>
                     <th>Aksi</th>
                 </tr>
             </thead>
@@ -57,7 +56,6 @@
                     <tr>
                         <td>{{ $detail->barang->kode_barang }}</td>
                         <td>{{ $detail->barang->nama_barang }}</td>
-                        <td>{{ $detail->barang->status }}</td>
                         <td>
                             <!-- Form untuk menghapus barang -->
                             <form action="{{ route('keranjang.remove', $detail->kode_detail) }}" method="POST">

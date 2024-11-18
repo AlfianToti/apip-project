@@ -115,4 +115,5 @@ Route::middleware(['auth', 'role:pengguna'])->group(function () {
     // Route untuk menyelesaikan peminjaman barang di keranjang
     Route::post('/keranjang/submit', [KeranjangController::class, 'submit'])->name('keranjang.submit');
 
+    Route::patch('/peminjaman/{kode_pinjam}/kembalikan', [PeminjamanController::class, 'kembalikan'])->name('peminjaman.kembalikan');
 });

@@ -33,6 +33,6 @@ class DetailPeminjaman extends Model
 
     public function barang()
     {
-        return $this->belongsTo(Barang::class, 'kode_barang');
+        return $this->belongsTo(Barang::class, 'kode_barang', 'kode_barang');
     }
 }

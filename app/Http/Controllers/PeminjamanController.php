@@ -17,7 +17,10 @@ class PeminjamanController extends Controller
     public function indexRiwayat()
     {
         // Ambil semua riwayat peminjaman pengguna
-        $peminjaman = Peminjaman::where('user_id', auth()->id())->orderBy('tanggal_pinjam', 'desc')->get();
+        $peminjaman = Peminjaman::where('user_id', auth()->id())
+        ->with(['detailPeminjaman.barang', 'ruang'])
+        ->orderBy('tanggal_pinjam', 'desc')
+        ->paginate(5);
 
         return view('pengguna.peminjaman.index', compact('peminjaman'));
     }
@@ -27,7 +30,9 @@ class PeminjamanController extends Controller
      */
     public function show($kode_pinjam)
     {
-        $peminjaman = Peminjaman::where('kode_pinjam', $kode_pinjam)
+        // Ambil data peminjaman dengan relasi ruang dan detail peminjaman
+        $peminjaman = Peminjaman::with(['ruang', 'detailPeminjaman.barang'])
+                        ->where('kode_pinjam', $kode_pinjam)
                         ->where('user_id', auth()->id())
                         ->firstOrFail();
 
@@ -56,7 +61,7 @@ class PeminjamanController extends Controller
 
         if ($existingLoan) {
             return redirect()->route('peminjaman.ruangan.index')
-                ->withErrors('Anda tidak bisa membuat janji peminjaman baru karena masih ada peminjaman yang belum selesai.');
+                ->withErrors('Anda tidak bisa membuat peminjaman baru karena masih ada peminjaman yang belum selesai.');
         }
 
         // Validasi input ruangan (jika ada ruangan yang ingin dipinjam)
@@ -74,7 +79,7 @@ class PeminjamanController extends Controller
             'user_id' => auth()->id(),
             'tanggal_pinjam' => now(),
             'status' => 'Belum Selesai',
-            'ruang_id' => $request->kode_ruang, // Bisa null jika tidak memilih ruangan
+            'kode_ruang' => $request->kode_ruang, // Bisa null jika tidak memilih ruangan
         ]);
 
         // Jika ada ruangan, update statusnya menjadi "Dipinjam"
@@ -84,4 +89,35 @@ class PeminjamanController extends Controller
 
         return redirect()->route('keranjang.index')->with('success', 'Janji peminjaman berhasil dibuat.');
     }
+
+    public function kembalikan($kode_pinjam)
+    {
+        // Ambil data peminjaman
+        $peminjaman = Peminjaman::where('kode_pinjam', $kode_pinjam)
+                        ->where('user_id', auth()->id())
+                        ->where('status', 'Belum Selesai')
+                        ->firstOrFail();
+
+        // Update status menjadi "Selesai" dan set tanggal_kembali
+        $peminjaman->update([
+            'status' => 'Selesai',
+            'tanggal_kembali' => now(),
+        ]);
+
+        // Kembalikan status semua barang dalam peminjaman menjadi "Tersedia"
+        foreach ($peminjaman->detailPeminjaman as $detail) {
+            $barang = $detail->barang;
+            if ($barang) {
+                $barang->update(['status' => 'Tersedia']);
+            }
+        }
+
+        if ($peminjaman->ruang) {
+            $peminjaman->ruang->update(['status' => 'Tersedia']);
+        }
+
+        return redirect()->route('peminjaman.index')->with('success', 'Peminjaman dan semua barang berhasil dikembalikan.');
+    }
+
+
 }

@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{{ isset($title) ? $title : 'Dashboard' }}</title> <!-- Menampilkan judul dinamis -->
+  <title>{{ isset($title) ? $title : 'Dashboard User' }}</title> <!-- Menampilkan judul dinamis -->
  <link rel="icon" href="/images/Fix2.png" type="image/png">
 
   <!-- Google Font: Source Sans Pro -->

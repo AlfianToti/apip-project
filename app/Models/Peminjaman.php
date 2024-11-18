@@ -36,10 +36,10 @@ class Peminjaman extends Model
 
     public function ruang()
     {
-        return $this->belongsTo(Ruang::class);
+        return $this->belongsTo(Ruang::class, 'kode_ruang', 'kode_ruang');
     }
     public function detailPeminjaman()
     {
-        return $this->hasMany(DetailPeminjaman::class, 'kode_pinjam');
+        return $this->hasMany(DetailPeminjaman::class, 'kode_pinjam', 'kode_pinjam');
     }
 }

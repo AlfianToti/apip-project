@@ -118,11 +118,6 @@ class KeranjangController extends Controller
                         ->where('status', 'Belum Selesai')
                         ->first();
 
-        if ($peminjaman) {
-            // Ubah status peminjaman menjadi "Selesai"
-            $peminjaman->update(['status' => 'Selesai']);
-        }
-
         return redirect()->route('peminjaman.index')->with('success', 'Peminjaman berhasil diajukan');
     }
 }

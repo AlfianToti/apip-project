@@ -65,9 +65,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 
 // Route khusus pengguna
 Route::middleware(['auth', 'role:pengguna'])->group(function () {
-    Route::get('/masterpengguna', function () {
-        return view('pengguna.index');
-    })->name('masterpengguna');
+    Route::get('/masterpengguna', [DashboardController::class, 'dashboard'])->name('masterpengguna');
 
     // Route untuk melihat ruang dan barang
     Route::get('/kelas', [KelasController::class, 'index'])->name('kelas.index');

@@ -33,10 +33,10 @@
                 <div class="card bg-info text-white mb-4">
                     <div class="card-body d-flex align-items-center">
                         <img src="/images/Classroom.png" alt="" style="width: 50px; height: 50px; margin-right: 10px;">
-                        <h3>11 Kelas</h3>
+                        <h3>{{ $jumlahKelas }} Kelas</h3>
                     </div>
                     <div class="card-footer d-flex align-items-center justify-content-between">
-                        <a class="small text-white stretched-link" href="kelas">More Info</a>
+                        <a class="small text-white stretched-link" href="{{ route('kelas.index') }}">More Info</a>
                         <div class="small text-white"><i class="fas fa-arrow-right"></i></div>
                     </div>
                 </div>
@@ -46,23 +46,23 @@
                 <div class="card bg-warning text-white mb-4">
                     <div class="card-body d-flex align-items-center">
                         <img src="/images/Inventory.png" alt="" style="width: 50px; height: 50px; margin-right: 10px;">
-                        <h3>20 Barang</h3>
+                        <h3>{{ $jumlahBarang }} Barang</h3>
                     </div>
                     <div class="card-footer d-flex align-items-center justify-content-between">
-                        <a class="small text-white stretched-link" href="alat">More Info</a>
+                        <a class="small text-white stretched-link" href="{{ route('alat.index') }}">More Info</a>
                         <div class="small text-white"><i class="fas fa-arrow-right"></i></div>
                     </div>
                 </div>
             </div>
-            <!-- Peminjam -->
+            <!-- Riwayat Peminjaman -->
             <div class="col-md-4">
                 <div class="card bg-danger text-white mb-4">
                     <div class="card-body d-flex align-items-center">
                         <img src="/images/Product.png" alt="" style="width: 50px; height: 50px; margin-right: 10px;">
-                        <h3>19 Peminjam</h3>
+                        <h3>{{ $jumlahPeminjaman }} Riwayat Peminjaman</h3>
                     </div>
                     <div class="card-footer d-flex align-items-center justify-content-between">
-                        <a class="small text-white stretched-link" href="peminjaman">More Info</a>
+                        <a class="small text-white stretched-link" href="{{ route('peminjaman.index') }}">More Info</a>
                         <div class="small text-white"><i class="fas fa-arrow-right"></i></div>
                     </div>
                 </div>

@@ -3,9 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Keranjang;
 use App\Models\Peminjaman;
-use App\Models\Barang;
 use App\Models\Ruang;
 use Illuminate\Support\Facades\Auth;
 
@@ -16,11 +14,10 @@ class PeminjamanController extends Controller
      */
     public function indexRiwayat()
     {
-        // Ambil semua riwayat peminjaman pengguna
         $peminjaman = Peminjaman::where('user_id', auth()->id())
-        ->with(['detailPeminjaman.barang', 'ruang'])
-        ->orderBy('tanggal_pinjam', 'desc')
-        ->paginate(5);
+                        ->with(['detailPeminjaman.barang', 'ruang'])
+                        ->orderBy('tanggal_pinjam', 'desc')
+                        ->paginate(5);
 
         return view('pengguna.peminjaman.index', compact('peminjaman'));
     }
@@ -30,7 +27,6 @@ class PeminjamanController extends Controller
      */
     public function show($kode_pinjam)
     {
-        // Ambil data peminjaman dengan relasi ruang dan detail peminjaman
         $peminjaman = Peminjaman::with(['ruang', 'detailPeminjaman.barang'])
                         ->where('kode_pinjam', $kode_pinjam)
                         ->where('user_id', auth()->id())
@@ -38,86 +34,77 @@ class PeminjamanController extends Controller
 
         return view('pengguna.peminjaman.show', compact('peminjaman'));
     }
+
     /**
-     * Memproses pembuatan janji peminjaman.
+     * Menampilkan form untuk membuat janji peminjaman.
      */
     public function indexPeminjaman()
     {
-        // Ambil semua ruangan yang tersedia untuk ditampilkan (opsional)
         $ruang = Ruang::where('status', 'Tersedia')->get();
 
         return view('pengguna.peminjaman.create', compact('ruang'));
     }
 
     /**
-     * Memproses pembuatan janji peminjaman dengan ruangan (opsional).
+     * Memproses pembuatan janji peminjaman.
      */
     public function store(Request $request)
     {
-        // Cek apakah pengguna memiliki peminjaman aktif
-        $existingLoan = Peminjaman::where('user_id', auth()->id())
-                        ->where('status', 'Belum Selesai')
-                        ->first();
-
-        if ($existingLoan) {
-            return redirect()->route('peminjaman.ruangan.index')
-                ->withErrors('Anda tidak bisa membuat peminjaman baru karena masih ada peminjaman yang belum selesai.');
-        }
-
-        // Validasi input ruangan (jika ada ruangan yang ingin dipinjam)
         $request->validate([
             'kode_ruang' => 'nullable|exists:ruang,kode_ruang',
         ]);
 
-        // Ambil nama pengguna dan format agar tidak ada spasi atau karakter khusus
-        $username = preg_replace('/\s+/', '', auth()->user()->name); // Menghapus spasi pada nama pengguna
+        $existingLoan = Peminjaman::where('user_id', auth()->id())
+                        ->whereIn('status', ['Belum Selesai', 'Pending'])
+                        ->first();
 
-        // Buat entri peminjaman
-        $kodePinjam = 'PJM-' . $username . '-' . now()->format('YmdHis');
+        if ($existingLoan) {
+            return redirect()->route('peminjaman.index')
+                ->withErrors('Anda tidak bisa membuat peminjaman baru karena masih ada peminjaman yang belum selesai.');
+        }
+
+        $kodePinjam = 'PJM-' . auth()->id() . '-' . now()->format('YmdHis');
+
         Peminjaman::create([
             'kode_pinjam' => $kodePinjam,
             'user_id' => auth()->id(),
             'tanggal_pinjam' => now(),
-            'status' => 'Belum Selesai',
-            'kode_ruang' => $request->kode_ruang, // Bisa null jika tidak memilih ruangan
+            'status' => 'Pending',
+            'kode_ruang' => $request->kode_ruang,
+            'catatan' => 'Peminjaman',
         ]);
 
-        // Jika ada ruangan, update statusnya menjadi "Dipinjam"
-        if ($request->kode_ruang) {
-            Ruang::where('kode_ruang', $request->kode_ruang)->update(['status' => 'Dipinjam']);
-        }
-
-        return redirect()->route('keranjang.index')->with('success', 'Janji peminjaman berhasil dibuat.');
+        return redirect()->route('keranjang.index')->with('success', 'Janji peminjaman berhasil dibuat. Tambahkan barang ke keranjang.');
     }
 
-    public function kembalikan($kode_pinjam)
+    /**
+     * Mengajukan peminjaman.
+     */
+    public function submit($kodePinjam)
     {
-        // Ambil data peminjaman
-        $peminjaman = Peminjaman::where('kode_pinjam', $kode_pinjam)
+        $peminjaman = Peminjaman::where('kode_pinjam', $kodePinjam)
+                        ->where('user_id', auth()->id())
+                        ->where('status', 'Pending')
+                        ->firstOrFail();
+
+        $peminjaman->update(['status' => 'Pending']);
+
+        return redirect()->route('peminjaman.index')->with('success', 'Peminjaman berhasil diajukan. Menunggu persetujuan admin.');
+    }
+
+    /**
+     * Mengajukan pengembalian.
+     */
+    public function kembalikan($kodePinjam)
+    {
+        $peminjaman = Peminjaman::with('detailPeminjaman.barang', 'ruang')
+                        ->where('kode_pinjam', $kodePinjam)
                         ->where('user_id', auth()->id())
                         ->where('status', 'Belum Selesai')
                         ->firstOrFail();
 
-        // Update status menjadi "Selesai" dan set tanggal_kembali
-        $peminjaman->update([
-            'status' => 'Selesai',
-            'tanggal_kembali' => now(),
-        ]);
+        $peminjaman->update(['status' => 'Pending', 'catatan' => 'Pengembalian']); // Pending untuk pengembalian
 
-        // Kembalikan status semua barang dalam peminjaman menjadi "Tersedia"
-        foreach ($peminjaman->detailPeminjaman as $detail) {
-            $barang = $detail->barang;
-            if ($barang) {
-                $barang->update(['status' => 'Tersedia']);
-            }
-        }
-
-        if ($peminjaman->ruang) {
-            $peminjaman->ruang->update(['status' => 'Tersedia']);
-        }
-
-        return redirect()->route('peminjaman.index')->with('success', 'Peminjaman dan semua barang berhasil dikembalikan.');
+        return redirect()->route('peminjaman.index')->with('success', 'Pengembalian diajukan. Menunggu persetujuan admin.');
     }
-
-
 }

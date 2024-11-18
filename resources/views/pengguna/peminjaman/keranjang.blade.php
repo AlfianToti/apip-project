@@ -19,24 +19,27 @@
 
     <!-- Form untuk Menambahkan Barang ke Keranjang -->
     <div class="mb-4">
-        <form action="{{ route('keranjang.store') }}" method="POST">
-        @csrf
-            <div class="row">
-                <div class="col-md-8">
-                    <label for="kode_barang" class="form-label">Pilih Barang</label>
-                    <select name="kode_barang" id="kode_barang" class="form-select" required>
-                        <option value="">-- Pilih Barang --</option>
-                        @foreach($barangTersedia as $barang)
-                            <option value="{{ $barang->kode_barang }}">{{ $barang->nama_barang }}</option>
-                        @endforeach
-                    </select>
+        @if($barangTersedia->isEmpty())
+            <p>Tidak ada barang yang tersedia untuk ditambahkan ke keranjang.</p>
+        @else
+            <form action="{{ route('keranjang.store') }}" method="POST">
+            @csrf
+                <div class="row">
+                    <div class="col-md-8">
+                        <label for="kode_barang" class="form-label">Pilih Barang</label>
+                        <select name="kode_barang" id="kode_barang" class="form-select" required>
+                            <option value="">-- Pilih Barang --</option>
+                            @foreach($barangTersedia as $barang)
+                                <option value="{{ $barang->kode_barang }}">{{ $barang->nama_barang }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="col-md-4 align-self-end">
+                        <button type="submit" class="btn btn-success w-100">Tambahkan ke Keranjang</button>
+                    </div>
                 </div>
-                <div class="col-md-4 align-self-end">
-                    <button type="submit" class="btn btn-success w-100">Tambahkan ke Keranjang</button>
-                </div>
-            </div>
-        </form>
-
+            </form>
+        @endif
     </div>
 
     <!-- Tabel Barang dalam Keranjang -->

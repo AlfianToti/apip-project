@@ -338,7 +338,7 @@
                     <ul class="nav nav-treeview">
                         <!-- Request Peminjaman -->
                         <li class="nav-item">
-                            <a href="{{ route('admin.request.peminjaman') }}" class="nav-link">
+                            <a href="{{ route('admin.peminjaman.index') }}" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Request Peminjaman</p>
                             </a>
@@ -346,7 +346,7 @@
                         
                         <!-- Request Pengembalian -->
                         <li class="nav-item">
-                            <a href="{{ route('admin.request.pengembalian') }}" class="nav-link">
+                            <a href="{{ route('admin.peminjaman.pengembalian') }}" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Request Pengembalian</p>
                             </a>
@@ -354,7 +354,7 @@
                         
                         <!-- Laporan Peminjaman -->
                         <li class="nav-item">
-                            <a href="{{ route('admin.laporan.peminjaman') }}" class="nav-link">
+                            <a href="{{ route('admin.peminjaman.laporan') }}" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Laporan Peminjaman</p>
                             </a>

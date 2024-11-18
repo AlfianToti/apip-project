@@ -9,23 +9,23 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
+    public function up()
     {
         Schema::create('peminjaman', function (Blueprint $table) {
             $table->string('kode_pinjam')->primary();
             $table->unsignedBigInteger('user_id');
-            $table->string('kode_ruang')->nullable(); 
+            $table->string('kode_ruang')->nullable();
             $table->dateTime('tanggal_pinjam');
             $table->dateTime('tanggal_kembali')->nullable();
             $table->text('catatan')->nullable();
-            $table->enum('status', ['Belum Selesai', 'Selesai']);
+            $table->enum('status', ['Pending', 'Belum Selesai', 'Selesai', 'Canceled'])->default('Pending');
             $table->timestamps();
 
-            // Foreign key
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('kode_ruang')->references('kode_ruang')->on('ruang')->onDelete('set null');
         });
     }
+
 
     /**
      * Reverse the migrations.

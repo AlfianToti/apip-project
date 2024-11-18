@@ -22,7 +22,7 @@ class RuangSeeder extends Seeder
         Ruang::create([
             'kode_ruang' => 'RG-MI_002',
             'nama_ruang' => 'MI-2',
-            'status' => 'Dipinjam',
+            'status' => 'Tersedia',
         ]);
     }
 }

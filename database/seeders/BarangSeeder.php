@@ -22,7 +22,7 @@ class BarangSeeder extends Seeder
         Barang::create([
             'kode_barang' => 'BRG-MI_002',
             'nama_barang' => 'Kabel VGA',
-            'status' => 'Dipinjam',
+            'status' => 'Tersedia',
         ]);
     }
 }

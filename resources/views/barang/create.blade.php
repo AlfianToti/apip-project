@@ -29,15 +29,12 @@
             <form action="{{ route('barang.store') }}" method="POST">
                 @csrf
                 <div class="form-group mb-3">
-                    <label for="nama">Nama Barang:</label>
-                    <input type="text" class="form-control" id="nama" name="nama" required>
+                    <label for="kode_barang">Kode Barang:</label>
+                    <input type="text" class="form-control" id="kode_barang" name="kode_barang" required>
                 </div>
                 <div class="form-group mb-3">
-                    <label for="status">Status:</label>
-                    <select class="form-control" id="status" name="status">
-                        <option value="1">Tersedia</option>
-                        <option value="0">Tidak Tersedia</option>
-                    </select>
+                    <label for="nama_barang">Nama Barang:</label>
+                    <input type="text" class="form-control" id="nama_barang" name="nama_barang" required>
                 </div>
                 <div class="d-flex justify-content-between">
                     <a href="{{ route('barang.index') }}" class="btn btn-secondary">Kembali</a>

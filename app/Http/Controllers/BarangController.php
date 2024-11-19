@@ -24,13 +24,13 @@ class BarangController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nama' => 'required|string|max:255',
-            'status' => 'required|boolean',
+            'kode_barang' => 'required|string',
+            'nama_barang' => 'required|string|max:255',
         ]);
 
         Barang::create([
-            'nama' => $request->nama,
-            'status' => $request->status,
+            'kode_barang' => $request->kode_barang,
+            'nama_barang' => $request->nama_barang,
         ]);
 
         return redirect()->route('barang.index')->with('success', 'Barang berhasil ditambahkan.');
@@ -47,14 +47,12 @@ class BarangController extends Controller
     public function update(Request $request, $kode_barang)
     {
         $request->validate([
-            'nama' => 'required|string|max:255',
-            'status' => 'required|boolean',
+            'nama_barang' => 'required|string|max:255'
         ]);
 
         $barang = Barang::findOrFail($kode_barang);
         $barang->update([
-            'nama' => $request->nama,
-            'status' => $request->status,
+            'nama_barang' => $request->nama_barang,
         ]);
 
         return redirect()->route('barang.index')->with('success', 'Barang berhasil diperbarui.');

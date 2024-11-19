@@ -41,7 +41,7 @@
                     @foreach ($barangs as $barang)
                         <tr>
                             <td>{{ $barang->kode_barang }}</td>
-                            <td>{{ $barang->nama }}</td>
+                            <td>{{ $barang->nama_barang }}</td>
                             <td>{{ $barang->status }}</td>
                             <td>
                                 <a href="{{ route('barang.edit', $barang->kode_barang) }}" class="btn btn-sm btn-warning">Edit</a>

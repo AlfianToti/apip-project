@@ -34,13 +34,6 @@
                     <label for="nama_ruang">Nama Ruang:</label>
                     <input type="text" class="form-control" id="nama_ruang" name="nama_ruang" value="{{ $ruang->nama_ruang }}" required>
                 </div>
-                <div class="form-group mb-3">
-                    <label for="status">Status:</label>
-                    <select class="form-control" id="status" name="status">
-                        <option value="1" {{ $ruang->status ? 'selected' : '' }}>Digunakan</option>
-                        <option value="0" {{ !$ruang->status ? 'selected' : '' }}>Tidak Digunakan</option>
-                    </select>
-                </div>
                 <div class="d-flex justify-content-between">
                     <a href="{{ route('ruang.index') }}" class="btn btn-secondary">Kembali</a>
                     <button type="submit" class="btn" style="background-color: #00a2ea; color: white;">Perbarui</button>

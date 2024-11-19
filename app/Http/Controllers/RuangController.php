@@ -23,11 +23,15 @@ class RuangController extends Controller
    public function store(Request $request)
    {
        $request->validate([
-           'nama_ruang' => 'required|string|max:255',
-           'status' => 'required|boolean',
+            'kode_ruang' => 'required|string|',
+            'nama_ruang' => 'required|string|max:255',
        ]);
 
-       Ruang::create($request->all()); // Menyimpan data baru
+       Ruang::create([
+            'kode_ruang' => $request->kode_ruang,
+            'nama_ruang' => $request->nama_ruang,
+            'status' => 'Tersedia',
+       ]); // Menyimpan data baru
        return redirect()->route('ruang.index')->with('success', 'Ruang berhasil ditambahkan.'); // Kembali ke index dengan pesan sukses
    }
 
@@ -42,12 +46,13 @@ class RuangController extends Controller
    public function update(Request $request, $kode_ruang)
    {
        $request->validate([
-           'nama_ruang' => 'required|string|max:255',
-           'status' => 'required|boolean',
+            'nama_ruang' => 'required|string|max:255',
        ]);
 
        $ruang = Ruang::findOrFail($kode_ruang); // Mencari ruang berdasarkan ID
-       $ruang->update($request->all()); // Memperbarui data ruang
+       $ruang->update([
+            'nama_ruang' => $request->nama_ruang
+       ]); // Memperbarui data ruang
        return redirect()->route('ruang.index')->with('success', 'Ruang berhasil diperbarui.'); // Kembali ke index dengan pesan sukses
    }
 

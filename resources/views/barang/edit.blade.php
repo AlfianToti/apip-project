@@ -30,15 +30,8 @@
                 @csrf
                 @method('PUT')
                 <div class="form-group mb-3">
-                    <label for="nama">Nama Barang:</label>
-                    <input type="text" class="form-control" id="nama" name="nama" value="{{ $barang->nama }}" required>
-                </div>
-                <div class="form-group mb-3">
-                    <label for="status">Status:</label>
-                    <select class="form-control" id="status" name="status">
-                        <option value="1" {{ $barang->status ? 'selected' : '' }}>Tersedia</option>
-                        <option value="0" {{ !$barang->status ? 'selected' : '' }}>Tidak Tersedia</option>
-                    </select>
+                    <label for="nama_barang">Nama Barang:</label>
+                    <input type="text" class="form-control" id="nama_barang" name="nama_barang" value="{{ $barang->nama_barang }}" required>
                 </div>
                 <div class="d-flex justify-content-between">
                     <a href="{{ route('barang.index') }}" class="btn btn-secondary">Kembali</a>

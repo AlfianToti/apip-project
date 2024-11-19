@@ -30,15 +30,12 @@
             <form action="{{ route('ruang.store') }}" method="POST">
                 @csrf
                 <div class="form-group mb-3">
-                    <label for="nama_ruang">Nama Ruang:</label>
-                    <input type="text" class="form-control" id="nama_ruang" name="nama_ruang" required>
+                    <label for="kode_ruang">Kode Ruang:</label>
+                    <input type="text" class="form-control" id="kode_ruang" name="kode_ruang" required>
                 </div>
                 <div class="form-group mb-3">
-                    <label for="status">Status:</label>
-                    <select class="form-control" id="status" name="status">
-                        <option value="Dipinjam">Digunakan</option>
-                        <option value="Tersedia">Tidak Digunakan</option>
-                    </select>
+                    <label for="nama_ruang">Nama Ruang:</label>
+                    <input type="text" class="form-control" id="nama_ruang" name="nama_ruang" required>
                 </div>
                 <div class="d-flex justify-content-between">
                     <a href="{{ route('ruang.index') }}" class="btn btn-secondary">Kembali</a>

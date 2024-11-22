@@ -11,15 +11,13 @@ use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 
 // Halaman Landing untuk pengguna yang belum login
+Route::get('/', function () {
+    if (Auth::check()) { return Auth::user()->role === 'admin' 
+            ? redirect()->route('admin.dashboard') 
+            : redirect()->route('masterpengguna');
+    }return view('welcome');})->name('landing');
+
 Route::middleware('guest')->group(function () {
-    Route::get('/', function () {
-        if (Auth::check()) {
-            return Auth::user()->role === 'admin' 
-                ? redirect()->route('admin.dashboard') 
-                : redirect()->route('masterpengguna');
-        }
-        return view('welcome');
-    })->name('landing');
 
     Route::get('/login', function () {
         return view('auth.login');
@@ -39,7 +37,7 @@ Route::middleware('auth')->post('/logout', [AuthController::class, 'logout'])->n
 Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/masteradmin', function () {
         return view('masteradmin');
-    });
+    })->name('masteradmin');
 
     // Route CRUD untuk Ruang
     Route::resource('/ruang', RuangController::class)->except(['show']);

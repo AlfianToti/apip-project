@@ -51,7 +51,7 @@ class PeminjamanController extends Controller
             'tanggal_pinjam' => [
                 'required',
                 'date',
-                'after_or_equal:' . now()->addDays(1)->toDateString(),
+                'after_or_equal:' . now()->addDays(7)->toDateString(),
             ],
             'tanggal_kembali' => [
                 'required',

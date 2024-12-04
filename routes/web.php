@@ -1,6 +1,7 @@
 <?php
 use App\Http\Controllers\AdminPeminjamanController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\DetailRuangController;
 use App\Http\Controllers\KeranjangController;
 use App\Http\Controllers\RuangController;
 use App\Http\Controllers\BarangController;
@@ -56,6 +57,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::patch('/peminjaman-admin/{kode_pinjam}/approve', [AdminPeminjamanController::class, 'approve'])->name('admin.peminjaman.approve');
     Route::patch('/peminjaman-admin/{kode_pinjam}/reject', [AdminPeminjamanController::class, 'reject'])->name('admin.peminjaman.reject');
     Route::patch('/peminjaman-admin/{kode_pinjam}/approve-pengembalian', [AdminPeminjamanController::class, 'approvePengembalian'])->name('admin.peminjaman.approvePengembalian');
+    Route::patch('/peminjaman-admin/{kode_pinjam}/rejectPengembalian', [AdminPeminjamanController::class, 'rejectPengembalian'])->name('admin.peminjaman.rejectPengembalian');
 
     // Route untuk laporan peminjaman
     Route::get('/laporan-peminjaman', [AdminPeminjamanController::class, 'laporan'])->name('admin.peminjaman.laporan');
@@ -74,6 +76,7 @@ Route::middleware(['auth', 'role:pengguna'])->group(function () {
     Route::get('/peminjaman/{kode_pinjam}', [PeminjamanController::class, 'show'])->name('peminjaman.show');
     Route::get('/buat-peminjaman', [PeminjamanController::class, 'indexPeminjaman'])->name('peminjaman.ruangan.index');
     Route::post('/buat-peminjaman', [PeminjamanController::class, 'store'])->name('peminjaman.ruangan.store');
+    Route::post('/peminjaman-cancel', [PeminjamanController::class, 'cancel'])->name('peminjaman.cancel');
     Route::patch('/peminjaman/{kode_pinjam}/kembalikan', [PeminjamanController::class, 'kembalikan'])->name('peminjaman.kembalikan');
 
     // Route untuk Keranjang
@@ -82,4 +85,10 @@ Route::middleware(['auth', 'role:pengguna'])->group(function () {
     Route::post('/keranjang/store', [KeranjangController::class, 'store'])->name('keranjang.store');
     Route::delete('/keranjang/{kode_detail}', [KeranjangController::class, 'remove'])->name('keranjang.remove');
     Route::post('/keranjang/submit', [KeranjangController::class, 'submit'])->name('keranjang.submit');
+
+    Route::get('/detail', [DetailRuangController::class, 'index'])->name('detail.index');
+    Route::get('/detail/create', [DetailRuangController::class, 'create'])->name('detail.create');
+    Route::post('/detail/store', [DetailRuangController::class, 'store'])->name('detail.store');
+    Route::delete('/detail/{kode_detail}', [DetailRuangController::class, 'remove'])->name('detail.remove');
+    Route::post('/detail/submit', [DetailRuangController::class, 'submit'])->name('detail.submit');
 });

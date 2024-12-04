@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('peminjaman', function (Blueprint $table) {
             $table->string('kode_pinjam')->primary();
             $table->unsignedBigInteger('user_id');
-            $table->string('kode_ruang')->nullable();
             $table->dateTime('tanggal_pinjam');
             $table->dateTime('tanggal_kembali')->nullable();
             $table->text('catatan')->nullable();
@@ -22,7 +21,6 @@ return new class extends Migration
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('kode_ruang')->references('kode_ruang')->on('ruang')->onDelete('set null');
         });
     }
 

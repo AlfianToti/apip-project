@@ -5,28 +5,28 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class DetailPeminjaman extends Model
+class DetailPeminjamanRuang extends Model
 {
     use HasFactory;
 
     // Nama tabel jika berbeda dari nama model
-    protected $table = 'detail_peminjaman';
+    protected $table = 'detail_peminjaman_ruang';
 
     // Primary key dari tabel
-    protected $primaryKey = 'kode_detail';
+    protected $primaryKey = 'kode_detail_ruang';
 
     // Tipe primary key
     protected $keyType = 'string';
 
     // Kolom yang dapat diisi (mass assignment)
     protected $fillable = [
-        'kode_detail',
+        'kode_detail_ruang',
         'kode_pinjam',
         'tanggal_req_pinjam',
         'tanggal_req_kembali',
-        'tanggal_pinjam_barang',
-        'tanggal_kembali_barang',
-        'kode_barang',
+        'tanggal_pinjam_ruang',
+        'tanggal_kembali_ruang',
+        'kode_ruang'
     ];
 
     // Relasi jika ada
@@ -34,9 +34,11 @@ class DetailPeminjaman extends Model
     {
         return $this->belongsTo(Peminjaman::class, 'kode_pinjam', 'kode_pinjam');
     }
-    // Di model DetailPeminjaman
-    public function barang()
+    public function ruang()
     {
-        return $this->belongsTo(Barang::class, 'kode_barang', 'kode_barang');
+        return $this->belongsTo(Ruang::class, 'kode_ruang', 'kode_ruang');
     }
+
+
+
 }

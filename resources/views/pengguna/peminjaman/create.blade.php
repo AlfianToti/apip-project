@@ -14,16 +14,20 @@
     <!-- Form untuk Janji Peminjaman -->
     <form action="{{ route('peminjaman.ruangan.store') }}" method="POST">
         @csrf
-        <div class="mb-3">
-            <label for="kode_ruang" class="form-label">Pilih Ruangan (Opsional)</label>
-            <select name="kode_ruang" id="kode_ruang" class="form-select">
-                <option value="">-- Tidak Meminjam Ruangan --</option>
-                @foreach($ruang as $item)
-                    <option value="{{ $item->kode_ruang }}">{{ $item->nama_ruang }}</option>
-                @endforeach
-            </select>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="tanggal_pinjam">Tanggal Mulai</label>
+                    <input type="date" name="tanggal_pinjam" class="form-control" value="{{ request('tanggal_pinjam') }}">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="tanggal_kembali">Tanggal Kembali</label>
+                    <input type="date" name="tanggal_kembali" class="form-control" value="{{ request('tanggal_kembali') }}">
+                </div>
+            </div>
         </div>
-
         <button type="submit" class="btn btn-primary">Buat Peminjaman</button>
     </form>
 </div>

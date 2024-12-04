@@ -24,5 +24,17 @@ class BarangSeeder extends Seeder
             'nama_barang' => 'Kabel VGA',
             'status' => 'Tersedia',
         ]);
+
+        Barang::create([
+            'kode_barang' => 'BRG-MI_003',
+            'nama_barang' => 'Converter HDMI',
+            'status' => 'Tersedia',
+        ]);
+
+        Barang::create([
+            'kode_barang' => 'BRG-MI_004',
+            'nama_barang' => 'Kabel HDMI',
+            'status' => 'Tersedia',
+        ]);
     }
 }

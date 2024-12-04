@@ -24,5 +24,17 @@ class RuangSeeder extends Seeder
             'nama_ruang' => 'MI-2',
             'status' => 'Tersedia',
         ]);
+
+        Ruang::create([
+            'kode_ruang' => 'RG-MI_003',
+            'nama_ruang' => 'MI-3',
+            'status' => 'Tersedia',
+        ]);
+        
+        Ruang::create([
+            'kode_ruang' => 'RG-MI_004',
+            'nama_ruang' => 'MI-4',
+            'status' => 'Tersedia',
+        ]);
     }
 }

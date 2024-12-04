@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Peminjaman;
-use App\Models\Ruang;
 use Illuminate\Support\Facades\Auth;
 
 class PeminjamanController extends Controller
@@ -15,7 +14,7 @@ class PeminjamanController extends Controller
     public function indexRiwayat()
     {
         $peminjaman = Peminjaman::where('user_id', auth()->id())
-                        ->with(['detailPeminjaman.barang', 'ruang'])
+                        ->with(['detailPeminjaman.barang', 'detailPeminjamanRuang.ruang'])
                         ->orderBy('tanggal_pinjam', 'desc')
                         ->paginate(5);
 
@@ -27,7 +26,7 @@ class PeminjamanController extends Controller
      */
     public function show($kode_pinjam)
     {
-        $peminjaman = Peminjaman::with(['ruang', 'detailPeminjaman.barang'])
+        $peminjaman = Peminjaman::with(['detailPeminjamanRuang.ruang', 'detailPeminjaman.barang'])
                         ->where('kode_pinjam', $kode_pinjam)
                         ->where('user_id', auth()->id())
                         ->firstOrFail();
@@ -40,9 +39,7 @@ class PeminjamanController extends Controller
      */
     public function indexPeminjaman()
     {
-        $ruang = Ruang::where('status', 'Tersedia')->get();
-
-        return view('pengguna.peminjaman.create', compact('ruang'));
+        return view('pengguna.peminjaman.create');
     }
 
     /**
@@ -51,8 +48,22 @@ class PeminjamanController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'kode_ruang' => 'nullable|exists:ruang,kode_ruang',
+            'tanggal_pinjam' => [
+                'required',
+                'date',
+                'after_or_equal:' . now()->addDays(1)->toDateString(),
+            ],
+            'tanggal_kembali' => [
+                'required',
+                'date',
+                'after_or_equal:tanggal_pinjam',
+            ],
         ]);
+
+        $tanggalPinjam = $request->tanggal_pinjam;
+        $tanggalKembali = $request->tanggal_kembali;
+
+        session(['tanggal_pinjam' => $tanggalPinjam, 'tanggal_kembali' => $tanggalKembali]);
 
         $existingLoan = Peminjaman::where('user_id', auth()->id())
                         ->whereIn('status', ['Belum Selesai', 'Pending'])
@@ -70,26 +81,24 @@ class PeminjamanController extends Controller
             'user_id' => auth()->id(),
             'tanggal_pinjam' => now(),
             'status' => 'Pending',
-            'kode_ruang' => $request->kode_ruang,
             'catatan' => 'Peminjaman',
         ]);
 
-        return redirect()->route('keranjang.index')->with('success', 'Janji peminjaman berhasil dibuat. Tambahkan barang ke keranjang.');
+        return redirect()->route('detail.index')->with('success', 'Tambahkan barang ke keranjang');
     }
 
     /**
      * Mengajukan peminjaman.
      */
-    public function submit($kodePinjam)
+    public function cancel()
     {
-        $peminjaman = Peminjaman::where('kode_pinjam', $kodePinjam)
-                        ->where('user_id', auth()->id())
+        $existingLoan = Peminjaman::where('user_id', auth()->id())
                         ->where('status', 'Pending')
-                        ->firstOrFail();
+                        ->first();
 
-        $peminjaman->update(['status' => 'Pending']);
-
-        return redirect()->route('peminjaman.index')->with('success', 'Peminjaman berhasil diajukan. Menunggu persetujuan admin.');
+        $existingLoan->delete();
+                        
+        return redirect()->route('peminjaman.index')->with('success', 'Peminjaman di Cancel');
     }
 
     /**
@@ -97,7 +106,7 @@ class PeminjamanController extends Controller
      */
     public function kembalikan($kodePinjam)
     {
-        $peminjaman = Peminjaman::with('detailPeminjaman.barang', 'ruang')
+        $peminjaman = Peminjaman::with('detailPeminjaman.barang', 'detailPeminjamanRuang.ruang')
                         ->where('kode_pinjam', $kodePinjam)
                         ->where('user_id', auth()->id())
                         ->where('status', 'Belum Selesai')

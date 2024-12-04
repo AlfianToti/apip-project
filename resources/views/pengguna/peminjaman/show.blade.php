@@ -18,8 +18,14 @@
             <td>{{ $peminjaman->tanggal_kembali ?? '-' }}</td>
         </tr>
         <tr>
-            <th>Ruangan</th>
-            <td>{{ $peminjaman->ruang->nama_ruang ?? '-' }}</td>
+            <th>Ruangan Dipinjam</th>
+            <td>
+                <ul>
+                    @foreach($peminjaman->detailPeminjamanRuang as $detail)
+                        <li>{{ $detail->ruang->nama_ruang }}</li>
+                    @endforeach
+                </ul>
+            </td>
         </tr>
         <tr>
             <th>Barang Dipinjam</th>

@@ -17,7 +17,7 @@
                 <th>User</th>
                 <th>Tanggal Pinjam</th>
                 <th>Ruangan</th>
-                <th>Barang Dipinjam</th>
+            <th>Barang Dipinjam</th>
                 <th>Aksi</th>
             </tr>
         </thead>
@@ -27,7 +27,13 @@
                     <td>{{ $pinjam->kode_pinjam }}</td>
                     <td>{{ $pinjam->user->name }}</td>
                     <td>{{ $pinjam->tanggal_pinjam }}</td>
-                    <td>{{ $pinjam->ruang->nama_ruang ?? '-' }}</td>
+                    <td>
+                        <ul>
+                            @foreach($pinjam->detailPeminjamanRuang as $detail)
+                                <li>{{ $detail->ruang->nama_ruang ?? 'Ruang Tidak Tersedia' }}</li>
+                            @endforeach
+                        </ul>
+                    </td>
                     <td>
                         <ul>
                             @foreach($pinjam->detailPeminjaman as $detail)

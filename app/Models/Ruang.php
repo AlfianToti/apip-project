@@ -15,9 +15,9 @@ class Ruang extends Model
     protected $keyType = 'string'; // Tipe primary key
     protected $fillable = ['kode_ruang', 'nama_ruang', 'status']; // Kolom yang dapat diisi
     public $timestamps = true; // Secara default, Laravel akan mengelola kolom created_at dan updated_at
-    public function peminjaman()
+    public function detailPeminjamanRuang()
     {
-        return $this->hasMany(Peminjaman::class, 'kode_ruang');
+        return $this->hasMany(DetailPeminjamanRuang::class, 'kode_ruang', 'kode_ruang');
     }
 }
 

@@ -25,6 +25,6 @@ class Barang extends Model
     public $timestamps = true;
     public function detailPeminjaman()
     {
-        return $this->hasMany(DetailPeminjaman::class, 'kode_barang');
+        return $this->hasMany(DetailPeminjaman::class, 'kode_barang', 'kode_barang');
     }
 }

@@ -2,14 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Barang;
+use App\Models\DetailPeminjaman;
+use App\Models\DetailPeminjamanRuang;
 use App\Models\Peminjaman;
+use App\Models\Ruang;
 use Illuminate\Http\Request;
 
 class AdminPeminjamanController extends Controller
 {
     public function index()
     {
-        $peminjaman = Peminjaman::with(['ruang', 'detailPeminjaman.barang'])
+        $peminjaman = Peminjaman::with(['detailPeminjamanRuang.ruang', 'detailPeminjaman.barang'])
                         ->where('status', 'Pending')
                         ->where('catatan', 'Peminjaman')
                         ->get();
@@ -19,23 +23,71 @@ class AdminPeminjamanController extends Controller
 
     public function approve($kodePinjam)
     {
-        $peminjaman = Peminjaman::with('detailPeminjaman.barang', 'ruang')
-                        ->where('kode_pinjam', $kodePinjam)
+        $peminjaman = Peminjaman::where('kode_pinjam', $kodePinjam)
                         ->where('status', 'Pending')
                         ->firstOrFail();
 
         $peminjaman->update(['status' => 'Belum Selesai']);
 
-        foreach ($peminjaman->detailPeminjaman as $detail) {
-            $detail->barang->update(['status' => 'Dipinjam']);
-        }
+         // Update Detail Peminjaman Ruang menggunakan perulangan
+         $detailPeminjamanRuang = DetailPeminjamanRuang::where('kode_pinjam', $kodePinjam)->get();
+         foreach ($detailPeminjamanRuang as $detail) {
 
-        if ($peminjaman->ruang) {
-            $peminjaman->ruang->update(['status' => 'Dipinjam']);
-        }
+            // Ambil tanggal_req_pinjam dan tanggal_req_kembali dari DetailPeminjamanRuang
+            $tanggalPinjam = $detail->tanggal_req_pinjam;
+            $tanggalKembali = $detail->tanggal_req_kembali;
 
+            $detail->update([
+                 'tanggal_pinjam_ruang' => $tanggalPinjam,
+                 'tanggal_kembali_ruang' => $tanggalKembali,
+            ]);
+         }
+
+         // Update Detail Peminjaman menggunakan perulangan
+         $detailPeminjaman = DetailPeminjaman::where('kode_pinjam', $kodePinjam)->get();
+         foreach ($detailPeminjaman as $detail) {
+
+            // Ambil tanggal_req_pinjam dan tanggal_req_kembali dari DetailPeminjamanRuang
+            $tanggalPinjam = $detail->tanggal_req_pinjam;
+            $tanggalKembali = $detail->tanggal_req_kembali;
+
+            $detail->update([
+                 'tanggal_pinjam_barang' => $tanggalPinjam,
+                 'tanggal_kembali_barang' => $tanggalKembali,
+            ]);
+         }
+         
         return redirect()->route('admin.peminjaman.index')->with('success', 'Peminjaman berhasil disetujui.');
     }
+        // (kode untuk function diatas) Panggil fungsi untuk update status barang dan ruang
+        // $this->updateStatusBarangRuang($peminjaman);
+
+    // public function updateStatusBarangRuang(Peminjaman $peminjaman)
+    // {
+    //     $hariIni = now();  // Ambil tanggal sekarang
+
+    //     // Pastikan peminjaman berada dalam rentang waktu yang valid
+    //     if ($hariIni->greaterThanOrEqualTo($peminjaman->tanggal_req_pinjam)) {
+    //         // Update status barang yang dipinjam menjadi "Dipinjam"
+    //         foreach ($peminjaman->detailPeminjaman as $detail) {
+    //             if ($detail->kode_barang) {
+    //                 $barang = Barang::where('kode_barang', $detail->kode_barang)->first();
+    //                 if ($barang && $barang->status == 'Tersedia') {
+    //                     $barang->update(['status' => 'Dipinjam']);
+    //                 }
+    //             }
+    //          }
+
+    //         foreach ($peminjaman->detailPeminjaman as $detail) {
+    //             if ($detail->kode_ruang) {
+    //                 $ruang = Ruang::where('kode_ruang', $detail->kode_ruang)->first();
+    //                 if ($ruang && $ruang->status == 'Tersedia') {
+    //                     $ruang->update(['status' => 'Dipinjam']);
+    //                 }
+    //             }
+    //         }
+    //     }
+    // }
 
     public function reject($kodePinjam)
     {
@@ -48,7 +100,7 @@ class AdminPeminjamanController extends Controller
 
     public function indexPengembalian()
     {
-        $peminjaman = Peminjaman::with(['ruang', 'detailPeminjaman.barang'])
+        $peminjaman = Peminjaman::with(['detailPeminjamanRuang.ruang', 'detailPeminjaman.barang'])
                         ->where('status', 'Pending')
                         ->where('catatan', 'Pengembalian')
                         ->get();
@@ -58,27 +110,55 @@ class AdminPeminjamanController extends Controller
 
     public function approvePengembalian($kodePinjam)
     {
-        $peminjaman = Peminjaman::with('detailPeminjaman.barang', 'ruang')
-                        ->where('kode_pinjam', $kodePinjam)
-                        ->where('status', 'Pending')
-                        ->firstOrFail();
+        // Ambil data peminjaman berdasarkan kode_pinjam
+        $peminjaman = Peminjaman::where('kode_pinjam', $kodePinjam)
+                                ->where('status', 'Pending')
+                                ->where('catatan', 'Pengembalian')
+                                ->first();
 
+        if (!$peminjaman) {
+            return redirect()->route('admin.peminjaman.pengembalian')->withErrors('Peminjaman tidak ditemukan.');
+        }
+
+        // Proses update status peminjaman menjadi 'Selesai'
         $peminjaman->update(['status' => 'Selesai', 'tanggal_kembali' => now()]);
 
-        foreach ($peminjaman->detailPeminjaman as $detail) {
-            $detail->barang->update(['status' => 'Tersedia']);
+        // Update Detail Peminjaman Ruang menggunakan perulangan
+        $detailPeminjamanRuang = DetailPeminjamanRuang::where('kode_pinjam', $kodePinjam)->get();
+        foreach ($detailPeminjamanRuang as $detail) {
+
+           $detail->update([
+                'tanggal_pinjam_ruang' => null,
+                'tanggal_kembali_ruang' => null,
+           ]);
         }
 
-        if ($peminjaman->ruang) {
-            $peminjaman->ruang->update(['status' => 'Tersedia']);
+        // Update Detail Peminjaman menggunakan perulangan
+        $detailPeminjaman = DetailPeminjaman::where('kode_pinjam', $kodePinjam)->get();
+        foreach ($detailPeminjaman as $detail) {
+
+           $detail->update([
+                'tanggal_pinjam_barang' => null,
+                'tanggal_kembali_barang' => null,
+           ]);
         }
 
-        return redirect()->route('admin.peminjaman.pengembalian')->with('success', 'Pengembalian berhasil disetujui.');
+        // Kembalikan respons sukses
+        return redirect()->route('admin.peminjaman.pengembalian')->with('success', 'Pengembalian berhasil diproses.');
+    }
+
+    public function rejectPengembalian($kodePinjam)
+    {
+        $peminjaman = Peminjaman::where('kode_pinjam', $kodePinjam)->firstOrFail();
+
+        $peminjaman->update(['status' => 'Belum Selesai']);
+
+        return redirect()->route('admin.peminjaman.index')->with('success', 'Peminjaman berhasil ditolak.');
     }
 
     public function laporan(Request $request)
     {
-        $query = Peminjaman::with(['ruang', 'detailPeminjaman.barang', 'user']);
+        $query = Peminjaman::with(['detailPeminjamanRuang.ruang', 'detailPeminjaman.barang', 'user']);
 
         // Filter berdasarkan tanggal (opsional)
         if ($request->filled('start_date') && $request->filled('end_date')) {

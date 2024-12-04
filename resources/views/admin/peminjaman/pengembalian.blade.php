@@ -39,7 +39,7 @@
                             @method('PATCH')
                             <button class="btn btn-success btn-sm">Setujui</button>
                         </form>
-                        <form action="{{ route('admin.peminjaman.reject', $pinjam->kode_pinjam) }}" method="POST" style="display: inline;">
+                        <form action="{{ route('admin.peminjaman.rejectPengembalian', $pinjam->kode_pinjam) }}" method="POST" style="display: inline;">
                             @csrf
                             @method('PATCH')
                             <button class="btn btn-danger btn-sm">Tolak</button>

@@ -22,7 +22,6 @@ class Peminjaman extends Model
     protected $fillable = [
         'kode_pinjam',
         'user_id',
-        'kode_ruang',
         'tanggal_pinjam',
         'tanggal_kembali',
         'catatan',
@@ -33,13 +32,12 @@ class Peminjaman extends Model
     {
         return $this->belongsTo(User::class);
     }
-
-    public function ruang()
-    {
-        return $this->belongsTo(Ruang::class, 'kode_ruang', 'kode_ruang');
-    }
     public function detailPeminjaman()
     {
         return $this->hasMany(DetailPeminjaman::class, 'kode_pinjam', 'kode_pinjam');
+    }
+    public function detailPeminjamanRuang()
+    {
+        return $this->hasMany(DetailPeminjamanRuang::class, 'kode_pinjam', 'kode_pinjam');
     }
 }

@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('barang', function (Blueprint $table) {
             $table->string('kode_barang')->primary();
             $table->string('nama_barang');
-            $table->enum('status', ['Tersedia', 'Dipinjam'])->default('Tersedia');
+            $table->enum('status', ['Tersedia', 'Reserved', 'Rusak'])->default('Tersedia');
             $table->timestamps();
         });
     }

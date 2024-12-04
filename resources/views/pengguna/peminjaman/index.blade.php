@@ -38,7 +38,18 @@
                         <td>{{ $pinjam->kode_pinjam }}</td>
                         <td>{{ $pinjam->tanggal_pinjam }}</td>
                         <td>{{ $pinjam->tanggal_kembali ?? '-' }}</td>
-                        <td>{{ $pinjam->ruang ? $pinjam->ruang->nama_ruang : '-' }}</td>
+                        <td>
+                        <!-- Daftar Ruang -->
+                        @if($pinjam->detailPeminjamanRuang->isNotEmpty())
+                                <ul class="list-unstyled">
+                                    @foreach($pinjam->detailPeminjamanRuang as $detail)
+                                        <li>{{ $detail->ruang->nama_ruang ?? 'Ruang Tidak Tersedia' }}</li>
+                                    @endforeach
+                                </ul>
+                            @else
+                                -
+                            @endif
+                        </td>
                         <td>
                             <!-- Daftar Barang -->
                             @if($pinjam->detailPeminjaman->isNotEmpty())

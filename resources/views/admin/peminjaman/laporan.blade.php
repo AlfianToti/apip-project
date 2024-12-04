@@ -7,11 +7,11 @@
     <form method="GET" action="{{ route('admin.peminjaman.laporan') }}" class="mb-4">
         <div class="row">
             <div class="col-md-4">
-                <label for="start_date">Tanggal Mulai</label>
+                <label for="start_date">Rentang Tanggal Mulai</label>
                 <input type="date" name="start_date" id="start_date" class="form-control" value="{{ request('start_date') }}">
             </div>
             <div class="col-md-4">
-                <label for="end_date">Tanggal Selesai</label>
+                <label for="end_date">Rentang Tanggal Selesai</label>
                 <input type="date" name="end_date" id="end_date" class="form-control" value="{{ request('end_date') }}">
             </div>
             <div class="col-md-4">
@@ -36,9 +36,11 @@
                 <th>Kode Peminjaman</th>
                 <th>Nama User</th>
                 <th>Tanggal Pinjam</th>
+                <th>Tanggal Rentang</th>
                 <th>Tanggal Kembali</th>
+                <th>Ruang</th>
+                <th>Barang</th>
                 <th>Status</th>
-                <th>Barang Dipinjam</th>
             </tr>
         </thead>
         <tbody>
@@ -47,15 +49,34 @@
                     <td>{{ $pinjam->kode_pinjam }}</td>
                     <td>{{ $pinjam->user->name }}</td>
                     <td>{{ $pinjam->tanggal_pinjam }}</td>
+                    <td>
+                        @if($pinjam->detailPeminjamanRuang->isNotEmpty())
+                            {{ $pinjam->detailPeminjamanRuang->first()->tanggal_req_pinjam }} s.d. 
+                            {{ $pinjam->detailPeminjamanRuang->first()->tanggal_req_kembali }}
+                        @elseif($pinjam->detailPeminjaman->isNotEmpty())
+                            {{ $pinjam->detailPeminjaman->first()->tanggal_req_pinjam }} s.d. 
+                            {{ $pinjam->detailPeminjaman->first()->tanggal_req_kembali }}
+                        @else
+                            -
+                        @endif
+                    </td>
                     <td>{{ $pinjam->tanggal_kembali ?? '-' }}</td>
-                    <td>{{ $pinjam->status }}</td>
                     <td>
                         <ul>
-                            @foreach($pinjam->detailPeminjaman as $detail)
-                                <li>{{ $detail->barang->nama_barang }}</li>
+                            @foreach($pinjam->detailPeminjamanRuang as $detail)
+                                <li>{{ $detail->ruang->nama_ruang ?? '-' }}</li>
                             @endforeach
                         </ul>
                     </td>
+                    <td>
+                        <ul>
+                            @foreach($pinjam->detailPeminjaman as $detail)
+                                <li>{{ $detail->barang->nama_barang ?? '-'}}</li>
+                            @endforeach
+                        </ul>
+                    </td>
+                    <td>{{ $pinjam->status }}</td>
+                    
                 </tr>
             @empty
                 <tr>

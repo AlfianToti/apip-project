@@ -18,6 +18,20 @@
             <td>{{ $peminjaman->tanggal_kembali ?? '-' }}</td>
         </tr>
         <tr>
+            <th>Tanggal Rentang</th>
+            <td>
+                @if($peminjaman->detailPeminjamanRuang->isNotEmpty())
+                    {{ $peminjaman->detailPeminjamanRuang->first()->tanggal_req_pinjam }} s.d. 
+                    {{ $peminjaman->detailPeminjamanRuang->first()->tanggal_req_kembali }}
+                @elseif($peminjaman->detailPeminjaman->isNotEmpty())
+                    {{ $peminjaman->detailPeminjaman->first()->tanggal_req_pinjam }} s.d. 
+                    {{ $peminjaman->detailPeminjaman->first()->tanggal_req_kembali }}
+                @else
+                    -
+                @endif
+            </td>
+        </tr>
+        <tr>
             <th>Ruangan Dipinjam</th>
             <td>
                 <ul>

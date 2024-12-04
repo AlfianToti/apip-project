@@ -85,6 +85,11 @@
         <p>Maaf, tidak ada ruangan yang tersedia pada rentang waktu ini.</p>
     @endif
 
+    <!-- Pagination -->
+    <div class="d-flex justify-content-center">
+        {{ $peminjaman->links('pagination::bootstrap-4') }}
+    </div>
+
 <!-- Tombol Submit untuk Menyelesaikan Peminjaman -->
     <div class="mt-4">
         <form action="{{ route('detail.submit') }}" method="POST">

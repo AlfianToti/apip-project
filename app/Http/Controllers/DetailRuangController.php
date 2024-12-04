@@ -26,6 +26,8 @@ class DetailRuangController extends Controller
         $ruangDipinjam = $peminjaman->detailPeminjamanRuang->load('ruang');
 
         $ruangTersedia = Ruang::whereNotIn('kode_ruang', $ruangDipinjam->pluck('ruang.kode_ruang'))
+                        ->orderBy('nama_ruang', 'asc')
+                        ->paginate(5)
                         // Pastikan ruang yang sudah dipinjam pada rentang waktu ini tidak muncul
                         ->whereDoesntHave('detailPeminjamanRuang', function ($query) use ($tanggalPinjam, $tanggalKembali) {
                             // Saring ruang yang memiliki peminjaman dalam rentang waktu yang diminta

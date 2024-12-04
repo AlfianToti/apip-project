@@ -162,7 +162,18 @@ class AdminPeminjamanController extends Controller
 
         // Filter berdasarkan tanggal (opsional)
         if ($request->filled('start_date') && $request->filled('end_date')) {
-            $query->whereBetween('tanggal_pinjam', [$request->start_date, $request->end_date]);
+            $query->where(function ($query) use ($request) {
+                // Filter berdasarkan tanggal_req_pinjam dan tanggal_req_kembali dari detailPeminjamanRuang
+                $query->whereHas('detailPeminjamanRuang', function ($query) use ($request) {
+                    $query->whereBetween('tanggal_req_pinjam', [$request->start_date, $request->end_date])
+                          ->orWhereBetween('tanggal_req_kembali', [$request->start_date, $request->end_date]);
+                })
+                ->orWhereHas('detailPeminjaman', function ($query) use ($request) {
+                    // Jika detailPeminjamanRuang kosong, ambil tanggal dari detailPeminjaman
+                    $query->whereBetween('tanggal_req_pinjam', [$request->start_date, $request->end_date])
+                          ->orWhereBetween('tanggal_req_kembali', [$request->start_date, $request->end_date]);
+                });
+            });
         }
 
         // Filter berdasarkan status (opsional)

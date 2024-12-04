@@ -25,9 +25,10 @@
                 <tr>
                     <th>Kode Pinjam</th>
                     <th>Tanggal Pinjam</th>
+                    <th>Tanggal Rentang</th>
                     <th>Tanggal Kembali</th>
-                    <th>Ruangan</th>
-                    <th>Barang Dipinjam</th>
+                    <th>Ruang</th>
+                    <th>Barang</th>
                     <th>Status</th>
                     <th>Aksi</th>
                 </tr>
@@ -37,6 +38,17 @@
                     <tr>
                         <td>{{ $pinjam->kode_pinjam }}</td>
                         <td>{{ $pinjam->tanggal_pinjam }}</td>
+                        <td>
+                            @if($pinjam->detailPeminjamanRuang->isNotEmpty())
+                                {{ $pinjam->detailPeminjamanRuang->first()->tanggal_req_pinjam }} s.d. 
+                                {{ $pinjam->detailPeminjamanRuang->first()->tanggal_req_kembali }}
+                            @elseif($pinjam->detailPeminjaman->isNotEmpty())
+                                {{ $pinjam->detailPeminjaman->first()->tanggal_req_pinjam }} s.d. 
+                                {{ $pinjam->detailPeminjaman->first()->tanggal_req_kembali }}
+                            @else
+                                -
+                            @endif
+                        </td>
                         <td>{{ $pinjam->tanggal_kembali ?? '-' }}</td>
                         <td>
                         <!-- Daftar Ruang -->

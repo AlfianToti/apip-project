@@ -94,10 +94,17 @@
 
     <!-- Tombol Submit untuk Menyelesaikan Peminjaman -->
     <div class="mt-4">
-        <form action="{{ route('keranjang.submit') }}" method="POST">
-            @csrf
-            <button type="submit" class="btn btn-success">Ajukan Peminjaman</button>
-        </form>
+        <div class="d-inline-block mr-2">
+            <form action="{{ route('keranjang.submit') }}" method="POST">
+                @csrf
+                <button type="submit" class="btn btn-success">Ajukan Peminjaman</button>
+            </form>
+        </div>
+        <div class="d-inline-block">
+        <a href="/detail" class="btn btn-warning">
+            Back
+        </a>
+        </div>
     </div>
 </div>
 @endsection

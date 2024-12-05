@@ -120,7 +120,7 @@
 <div class="register-container">
     <div class="register-card">
         <div class="register-image">
-            <img src="{{ asset('img/logo-mi.png') }}" alt="Register Image">
+            <img src="{{ asset('images/logo-mi.png') }}" alt="Register Image">
         </div>
         <div class="register-form">
             <div class="centered-text">

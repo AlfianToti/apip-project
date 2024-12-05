@@ -26,21 +26,23 @@ class DetailRuangController extends Controller
         $ruangDipinjam = $peminjaman->detailPeminjamanRuang->load('ruang');
 
         $ruangTersedia = Ruang::whereNotIn('kode_ruang', $ruangDipinjam->pluck('ruang.kode_ruang'))
-                        ->orderBy('nama_ruang', 'asc')
-                        ->paginate(5)
-                        // Pastikan ruang yang sudah dipinjam pada rentang waktu ini tidak muncul
                         ->whereDoesntHave('detailPeminjamanRuang', function ($query) use ($tanggalPinjam, $tanggalKembali) {
                             // Saring ruang yang memiliki peminjaman dalam rentang waktu yang diminta
                             $query->where(function ($subQuery) use ($tanggalPinjam, $tanggalKembali) {
                                 $subQuery->whereBetween('tanggal_pinjam_ruang', [$tanggalPinjam, $tanggalKembali])
-                                        ->orWhere(function ($subSubQuery) use ($tanggalPinjam, $tanggalKembali) {
-                                            $subSubQuery->where('tanggal_kembali_ruang', '>=', $tanggalPinjam)
-                                                        ->where('tanggal_kembali_ruang', '<=', $tanggalKembali);
-                                        });
+                                    ->orWhere(function ($subSubQuery) use ($tanggalPinjam, $tanggalKembali) {
+                                        $subSubQuery->where('tanggal_kembali_ruang', '>=', $tanggalPinjam)
+                                            ->where('tanggal_kembali_ruang', '<=', $tanggalKembali);
+                                    });
                             });
                         })
-                        ->select('kode_ruang', 'nama_ruang') // Ambil hanya kolom yang dibutuhkan
-                        ->get();
+                        ->orderBy('nama_ruang', 'asc')
+                        ->select('kode_ruang', 'nama_ruang')
+                        ->paginate(5);
+
+// You can access $ruangTersedia like a paginated result:
+$ruangTersedia->appends(request()->all()); // To preserve query parameters for pagination links
+
 
 
         return view('pengguna.peminjaman.keranjangr', compact( 'ruangDipinjam', 'peminjaman', 'ruangTersedia'));

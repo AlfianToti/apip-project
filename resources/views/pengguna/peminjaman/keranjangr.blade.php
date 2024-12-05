@@ -87,21 +87,23 @@
 
     <!-- Pagination -->
     <div class="d-flex justify-content-center">
-        {{ $peminjaman->links('pagination::bootstrap-4') }}
+        {{ $ruangTersedia->links('pagination::bootstrap-4') }}
     </div>
 
 <!-- Tombol Submit untuk Menyelesaikan Peminjaman -->
     <div class="mt-4">
-        <form action="{{ route('detail.submit') }}" method="POST">
-            @csrf
-            <button type="submit" class="btn btn-success">Next</button>
-        </form>
-    </div>
-    <div class="mt-4">
-        <form action="{{ route('peminjaman.cancel') }}" method="POST">
-            @csrf
-            <button type="submit" class="btn btn-a-danger">Cancel</button>
-        </form>
+        <div class="d-inline-block mr-2">
+            <form action="{{ route('detail.submit') }}" method="POST">
+                @csrf
+                <button type="submit" class="btn btn-success">Next</button>
+            </form>
+        </div>
+        <div class="d-inline-block">
+            <form action="{{ route('peminjaman.cancel') }}" method="POST">
+                @csrf
+                <button type="submit" class="btn btn-danger">Cancel</button>
+            </form>
+        </div>
     </div>
 </div>
 @endsection

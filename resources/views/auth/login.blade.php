@@ -10,7 +10,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
     <style>
         body {
-            background-image: url('{{ asset('img/bg-gedung-a.png') }}');
+            background-image: url('{{ asset('images/bg-gedung-a.png') }}');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
@@ -129,7 +129,7 @@
 <div class="login-container">
     <div class="login-card">
         <div class="login-image">
-            <img src="{{ asset('img/logo-mi.png') }}" alt="Login Image">
+            <img src="{{ asset('images/logo-mi.png') }}" alt="Login Image">
         </div>
         <div class="login-form">
             <div class="centered-text">

@@ -27,8 +27,6 @@ class KeranjangController extends Controller
 
         // Filter barang dan ruang yang tersedia berdasarkan rentang waktu yang dipilih
         $barangTersedia = Barang::whereNotIn('kode_barang', $barangDipinjam->pluck('barang.kode_barang'))
-                                ->orderBy('nama_barang', 'asc')
-                                ->paginate(5)
                                 ->whereDoesntHave('detailPeminjaman', function ($query) use ($tanggalPinjam, $tanggalKembali) {
                                     // Saring ruang yang memiliki peminjaman dalam rentang waktu yang diminta
                                     $query->where(function ($subQuery) use ($tanggalPinjam, $tanggalKembali) {
@@ -40,7 +38,8 @@ class KeranjangController extends Controller
                                     });
                                 })
                                 ->select('kode_barang', 'nama_barang') // Ambil hanya kolom yang dibutuhkan
-                                ->get();
+                                ->orderBy('nama_barang', 'asc')
+                                ->paginate(5);
 
         return view('pengguna.peminjaman.keranjangb', compact('barangDipinjam', 'peminjaman', 'barangTersedia',));
     }

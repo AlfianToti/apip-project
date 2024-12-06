@@ -2,7 +2,6 @@
 
 @section('content')
 <style>
-    <style>
     .page-title {
         font-size: 20px;
         font-weight: bold;
